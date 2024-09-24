@@ -1,8 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import Styles from '@/app/Login/login.module.css'
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
 
 
 
@@ -20,7 +18,6 @@ const Login = (props) => {
 
   return (
     <>
-    <Header></Header>
     <div className={Styles.mainContainer}>
       <div className={Styles.titleContainer}>
         <h5>Entrar</h5>
@@ -62,7 +59,7 @@ const Login = (props) => {
             </a>
       </div>
       </div>
-      <Footer></Footer>
+      
       </>
   )
 }

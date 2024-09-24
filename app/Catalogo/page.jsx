@@ -1,8 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import Styles from '@/app/Catalogo/catalogo.module.css'
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
 
 const Login = (props) => {
     const [codigo, setEmail] = useState('')
@@ -16,10 +14,9 @@ const Login = (props) => {
 
     return (
         <>
-            <Header></Header>
             <div className={Styles.formulario}></div>
             <form>
-                <label>
+                <label className=''>
                     Código do exemplar:
                     <input type="text" name="codigo" />
                 </label>
@@ -55,7 +52,7 @@ const Login = (props) => {
                     <input className={Styles.inputButton} type="button" onClick={onButtonClick} value={'Registrar'} />
                 </div>
             </form>
-            <Footer></Footer>
+            
         </>
     )
 }
