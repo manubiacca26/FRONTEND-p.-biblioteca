@@ -1,14 +1,12 @@
 'use client'
 
 import Styles from '@/app/Reserva/page.module.css'
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
 import React from "react";
 
 function Reserva() {
     const [rm, setRm] = React.useState('');
     const [exemplar, setExemplar] = React.useState('');
-
+    
     return (
         <>
             <div>
@@ -18,7 +16,7 @@ function Reserva() {
                         RM:
                         <input type="number" name="registrodematricula" onChange={(e) => setRm(e.target.value)} value={rm} />
                     </label>
-                    <button onClick={() => setRm('')} type="button">Limpar</button>
+                    <button onClick={( ) => setRm('')} type="button">Limpar</button>
                     <input type="submit" value="Enviar" />
                     </div>
 
@@ -34,6 +32,9 @@ function Reserva() {
                     <button onClick={() => setExemplar('')} type="button">Limpar</button>
                     <input type="submit" value="Enviar" />
                     <div className={Styles.aluno}>
+                    </div>
+                    <div className={Styles.button}>
+                    <input type="submit" value="Reservar" />
                     </div>
                     </div>
                 </form>
