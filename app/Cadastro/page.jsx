@@ -32,7 +32,7 @@ const CADASTRO = () => {
             <label>NOVO CADASTRO</label>
              </p>
 
-            <form className={Style.form} onSubmit={handleSubmit}>
+            <form className={Style.form}>
                 <label>Nome Completo:</label>
                     <input type="text"
                         value={name}
@@ -74,9 +74,7 @@ const CADASTRO = () => {
                         onChange={(e) => setSenha(e.target.value)}
                         required
                     />
-                    <button className={Style.revelar} onClick={handleTogglePassword}>
-                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
+                
                 
                 <br />
 
@@ -85,11 +83,9 @@ const CADASTRO = () => {
                         type={showPassword ? "text" : "password"} 
                         value={Csenha}
                         onChange={(e) => setCsenha(e.target.value)}
-                        required
+                        
                     />
-                    <button className={Style.revelar} onClick={handleTogglePassword}>
-                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
+                    
                 
                 <br />
 
@@ -103,7 +99,7 @@ const CADASTRO = () => {
                 </select>
 
                 <br />
-                <button className={Style.button} type="submit">Enviar</button>
+                <button className={Style.button} onSubmit={handleSubmit} type="submit">Enviar</button>
             </form>
 
         <FooterCADASTRO className={Style.footer}></FooterCADASTRO>
