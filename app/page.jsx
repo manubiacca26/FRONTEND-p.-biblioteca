@@ -7,7 +7,35 @@ const Home = () => {
   return (
     <div>
       <Header></Header>
-      <text> conteudo </text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Footer></Footer>
     </div>
   );
