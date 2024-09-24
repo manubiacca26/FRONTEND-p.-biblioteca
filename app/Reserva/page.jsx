@@ -11,7 +11,6 @@ function Reserva() {
 
     return (
         <>
-            <Header></Header>
             <div>
                 <form>
                     <div className={Styles.div1}>
@@ -39,7 +38,6 @@ function Reserva() {
                     </div>
                 </form>
             </div>
-            <Footer></Footer>
             </>
    
     )
