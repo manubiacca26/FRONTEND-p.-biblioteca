@@ -6,7 +6,7 @@
     margin-left: 25%;
     margin-right: 25%;
     background-color: #e0dede;
-    margin-bottom: 5%;
+    margin-bottom: 1px;
 
 }
 
@@ -49,8 +49,52 @@
     align-items: end;
   }
 
-  .option {
-    margin-top: 1%;
-  }
+.title{
+  margin-left: 25%;
+  margin-top: 1%;
+  border-style: groove;
+}
 
+.inputButton {
+  border: none;
+  background:red;
+  color: white;
+  padding: 10px 25px;
+  margin: 8px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space;
+  margin-top: 10px;
+  margin-left: 270px;
+  margin-bottom: 10px;
+}
+
+.inputBox {
+  height: 30px;
+  width: 210px;
+  font-size: small;
+  border-radius: 2px;
+  border: 3px solid grey;
+  padding-left: 10px;
+  background-color:#e0dede;
+  margin-left: 370px;
+}
+
+.inputType {
+  height: 30px;
+  width: 210px;
+  font-size: small;
+  border-radius: 2px;
+  border: 3px solid grey;
+  padding-left: 10px;
+  background-color:#e0dede;
+  
+}
   
