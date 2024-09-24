@@ -1,10 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import HeaderCADASTRO from '@/app/components/HeaderCADASTRO';
-import FooterCADASTRO from '@/app/components/FooterCADASTRO';
 import Style from '@/app/Cadastro/cadastro.module.css';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const CADASTRO = () => {
     const [name, setName] = useState("");
@@ -13,7 +10,7 @@ const CADASTRO = () => {
     const [Dnasc, setDnasc] = useState("");
     const [Senha, setSenha] = useState("");
     const [Csenha, setCsenha] = useState("");
-    const [showPassword, setShowPassword] = useState(false); // new state variable
+    const [showPassword, setShowPassword] = useState(false); 
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +23,6 @@ const CADASTRO = () => {
 
     return (
         <>
-            <HeaderCADASTRO></HeaderCADASTRO>
             
             <p className={Style.title} >
             <label>NOVO CADASTRO</label>
@@ -102,7 +98,6 @@ const CADASTRO = () => {
                 <button className={Style.button} onSubmit={handleSubmit} type="submit">Enviar</button>
             </form>
 
-        <FooterCADASTRO className={Style.footer}></FooterCADASTRO>
         </>
     );
 };
