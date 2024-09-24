@@ -1,22 +1,21 @@
-'use client'
+"use client"
 
-import Styles from '@/app/Reserva/page.module.css'
+import Styles from '@/app/Emprestimo/page.module.css'
 import React from "react";
 
-function Reserva() {
-    const [rm, setRm] = React.useState('');
+function Emprestimo() {
+    const [id, setId] = React.useState('');
     const [exemplar, setExemplar] = React.useState('');
-    
+
     return (
         <>
-            <div>
-                <form>
+         <form>
                     <div className={Styles.div1}>
                     <label className={Styles.form}>
-                        RM:
-                        <input type="number" name="registrodematricula" onChange={(e) => setRm(e.target.value)} value={rm} required/>
+                        CPF/RM/RA:
+                        <input type="number" name="registrodematricula" onChange={(e) => setId(e.target.value)} value={id} required />
                     </label>
-                    <button onClick={( ) => setRm('')} type="button">Limpar</button>
+                    <button onClick={( ) => setId('')} type="button">Limpar</button>
                     <input type="submit" value="Enviar" />
                     </div>
 
@@ -31,16 +30,16 @@ function Reserva() {
                     </label>
                     <button onClick={() => setExemplar('')} type="button">Limpar</button>
                     <input type="submit" value="Enviar" />
-                    <div className={Styles.aluno}>
+                    <div className={Styles.aluno}> INFORMAÇÕES SOBRE O EXMPLAR
                     </div>
                     <div className={Styles.button}>
-                    <input type="submit" value="Reservar" />
+                    <input type="date" id='date'required />
                     </div>
+                    <div className={Styles.button}> <input type="submit" value="Enviar"/> </div>
                     </div>
                 </form>
-            </div>
-            </>
-   
+        </>
     )
 }
-export default Reserva;
+
+export default Emprestimo; 
