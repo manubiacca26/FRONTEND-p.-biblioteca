@@ -4,7 +4,6 @@ import Styles from '@/app/page.module.css'
 const Header = () => {
     return (
       <header>
-        <nav>
           <div className={Styles.header}> 
         <Image 
         width={200}
@@ -19,8 +18,9 @@ const Header = () => {
         <ul> BEM VINDO(A)</ul>
         </div>
         </div>
-        </nav>
+        <nav className={Styles.nav}> consultar acervo sair </nav>
       </header>
+
     );
   };
   

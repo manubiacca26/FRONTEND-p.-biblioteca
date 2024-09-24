@@ -14,11 +14,12 @@ function Reserva() {
                     <div className={Styles.div1}>
                     <label className={Styles.form}>
                         RM:
-                        <input type="number" name="registrodematricula" onChange={(e) => setRm(e.target.value)} value={rm} required/>
+                        <input className={Styles.inputBox} type="number" name="registrodematricula" onChange={(e) => setRm(e.target.value)} value={rm} required/>
                     </label>
                     <button onClick={( ) => setRm('')} type="button">Limpar</button>
                     <input type="submit" value="Enviar" />
                     </div>
+                    
 
                     <div className={Styles.aluno}>
                     INFORMAÇÕES DO ALUNO
@@ -27,14 +28,14 @@ function Reserva() {
                     <div className={Styles.div1}>
                     <label className={Styles.form}>
                         EXEMPLAR:
-                        <input type="text" name="registrodematricula" onChange={(e) => setExemplar(e.target.value)} value={exemplar} required />
+                        <input className={Styles.inputBox} type="text" name="registrodematricula" onChange={(e) => setExemplar(e.target.value)} value={exemplar} required />
                     </label>
                     <button onClick={() => setExemplar('')} type="button">Limpar</button>
                     <input type="submit" value="Enviar" />
-                    <div className={Styles.aluno}>
+                    <div className={Styles.aluno}> INFORMAÇÕES DO EXEMPLAR
                     </div>
                     <div className={Styles.button}>
-                    <input type="submit" value="Reservar" />
+                    <input className={Styles.inputButton} type="submit" value="Reservar" />
                     </div>
                     </div>
                 </form>
