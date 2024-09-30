@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Styles from '@/app/page.module.css'
+import Styles from '@/app/page.module.css';
+import Link from 'next/link';
 
 const HeaderCADASTRO = () => {
     return (
@@ -17,6 +18,7 @@ const HeaderCADASTRO = () => {
         </div>
         <div className={Styles.title}>
         <button> Cadastre-se (A)</button>
+        
         </div>
         </div>
         </nav>
