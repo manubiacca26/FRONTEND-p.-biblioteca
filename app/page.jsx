@@ -38,7 +38,7 @@ const SignIn = () => {
         <p>Usuário</p>
         <input
           value={usuario}
-          placeholder="e-mail"
+          placeholder="Usuário"
           required
           onChange={(ev) => setUsuario(ev.target.value)}
           className={Styles.inputBox}
@@ -50,7 +50,7 @@ const SignIn = () => {
         <input
           type="password"
           value={senha}
-          placeholder="senha"
+          placeholder="Senha"
           required
           onChange={(ev) => setSenha(ev.target.value)}
           className={Styles.inputBox}

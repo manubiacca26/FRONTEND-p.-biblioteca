@@ -77,6 +77,16 @@ const PagInicialSemCadastro = (props) => {
                         </Link>
                         </button>
                         <label>Cadastrar colaborador</label>
+                    </div> 
+
+                    <div className={Style.box}>
+
+                        <button className={Style.botao}>
+                        <Link href="./Atualizar">
+                            <Image src="/atualização.jpg" alt="Button Image" width={200} height={200} />
+                        </Link>
+                        </button>
+                        <label>Atualizar Acervo</label>
                     </div>
 
                 </div>
