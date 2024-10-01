@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
-import Style from '@/app/PagInicialSemCadastro/pagInicial.module.css';
+import Style from '@/app/PagInicial/pagInicial.module.css';
+import Link  from 'next/link';
+import HeaderCADASTRO from '../components/HeaderCADASTRO';
+import FooterCADASTRO from '../components/FooterCADASTRO';
+
+
 
 const PagInicialSemCadastro = (props) => {
     return (
@@ -13,7 +18,9 @@ const PagInicialSemCadastro = (props) => {
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
+                        <Link href="./Devolucao">
                             <Image src="/devolução.jpg" alt="Button Image" width={200} height={200} />
+                        </Link>
                         </button>
                         <label>Devolução</label>
                     </div>
@@ -21,16 +28,19 @@ const PagInicialSemCadastro = (props) => {
 
                     <div className={Style.box}>
                         <button className={Style.botao}>
+                        <Link href="./Emprestimo">
                             <Image src="/Emprestimo.png" alt="Button Image" width={200} height={200} />
+                        </Link>
                         </button>
-
-                        <label>Emprestimo</label>
+                        <label>Empréstimo</label>
                     </div>
 
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
+                        <Link href="./Catalogo">
                             <Image src="/catalogo.jpg" alt="Button Image" width={200} height={200} />
+                        </Link>
                         </button>
                         <label>Catalogação</label>
                     </div>
@@ -42,7 +52,9 @@ const PagInicialSemCadastro = (props) => {
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
+                        <Link href="./SituacaoDoLivro">
                             <Image src="/situação do livro.avif" alt="Button Image" width={200} height={200} />
+                        </Link>
                         </button>
                         <label>Situação do Livro</label>
                     </div>
@@ -50,7 +62,9 @@ const PagInicialSemCadastro = (props) => {
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
+                        <Link href="./Reserva">
                             <Image src="/reserva livro.webp" alt="Button Image" width={200} height={200} />
+                        </Link>
                         </button>
                         <label>Reserva</label>
                     </div>
@@ -58,16 +72,18 @@ const PagInicialSemCadastro = (props) => {
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
+                        <Link href="./CColaborador">
                             <Image src="/cadastro.avif" alt="Button Image" width={200} height={200} />
+                        </Link>
                         </button>
                         <label>Cadastrar colaborador</label>
                     </div>
                 </div>
 
             </div>
-
         </>
     )
 }
 
 export default PagInicialSemCadastro;
+

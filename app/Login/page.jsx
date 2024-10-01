@@ -1,71 +1,73 @@
-"use client"
-import React, { useState } from 'react'
-import Styles from '@/app/Login/login.module.css'
+'use client';
+import { useState } from 'react';
+import Styles from "@/app/Login/login.module.css";
 
+const SignIn = () => {
+  const [usuario, setUsuario] = useState('');
+  const [senha, setSenha] = useState('');
+  const [msgError, setMsgError] = useState('');
 
+  const handleEntrar = () => {
+    const usuarioFixo = 'BIBLIOTECA';
+    const senhaFixa = 'sesi2024';
 
-const Login = (props) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
+    if (!usuario || !senha) {
+      setMsgError('Por favor, preencha todos os campos.');
+      return;
+    }
 
-
-  const onButtonClick = () => {
-    // You'll update this function later...
-  }
-
+    if (usuario === usuarioFixo && senha === senhaFixa) {
+      const token = Math.random().toString(16).substr(2) + Math.random().toString(16).substr(2) + "Amamos_DS_;-)";
+      localStorage.setItem("token", token);
+      localStorage.setItem("userLogado", JSON.stringify({ userCad: usuarioFixo, senhaCad: senhaFixa }));
+      window.location.href = "../PagInicialSemCadastro"; // Redirecionar após login
+    } else {
+      setMsgError('Usuário ou senha incorretos');
+      setUsuario('');
+      setSenha('');
+    }
+  };
 
   return (
-    <>
     <div className={Styles.mainContainer}>
       <div className={Styles.titleContainer}>
         <h5>Entrar</h5>
       </div>
       <br />
       <div className={Styles.inputContainer}>
-        <p>
-            Usuário
-        </p>
+        <p>Usuário</p>
         <input
-          value={email}
-          placeholder="e-mail" required
-          onChange={(ev) => setEmail(ev.target.value)}
+          value={usuario}
+          placeholder="e-mail"
+          required
+          onChange={(ev) => setUsuario(ev.target.value)}
           className={Styles.inputBox}
         />
-        <label className="errorLabel">{setEmailError}</label>
       </div>
       <br />
       <div className={Styles.inputContainer}>
-        <p>
-            Senha
-        </p>
-        <input type="password"
-          value={password}
-          placeholder="senha" required
-          onChange={(ev) => setPassword(ev.target.value)}
-          className={Styles.inputBox}>
-          </input>
-        <label className="errorLabel">{setPasswordError}</label>
+        <p>Senha</p>
+        <input
+          type="password"
+          value={senha}
+          placeholder="senha"
+          required
+          onChange={(ev) => setSenha(ev.target.value)}
+          className={Styles.inputBox}
+        />
       </div>
       <br />
       <div className={Styles.inputContainer}>
-        <input className={Styles.inputButton} type="button" onClick={onButtonClick} value={'Entrar'} />
-        </div>
-
-        <div className={Styles.cadas}>
-          <a href="./cadastro">
-            Cadastre-se
-            </a>
+        <input
+          className={Styles.inputButton}
+          type="submit"
+          onClick={handleEntrar}
+          value={'Entrar'}
+        />
       </div>
-      </div>
-      
-      </>
-  )
-}
+      {msgError && <div style={{ color: 'red' }}>{msgError}</div>}
+    </div>
+  );
+};
 
-export default Login
-    
-
-
- 
+export default SignIn;

@@ -5,6 +5,17 @@
   justify-content: end; 
 }
 
+.nav2{
+  display: flex;
+  justify-content: start;
+}
+
+.naav{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1%;
+}
+
 .header {
   width: 100%;
   display: flex;
@@ -19,6 +30,8 @@
   justify-content:flex-end;
   color:aliceblue;
   margin-top: 30px;
+  margin-right: 2%;
+  margin-top: 2.5%;
     
 }
 

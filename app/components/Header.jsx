@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Styles from '@/app/page.module.css'
+import Link from "next/link";
 
 const Header = () => {
     return (
@@ -15,11 +16,16 @@ const Header = () => {
         <ul>CE242 - Vinhedo</ul>
         </div>
         <div className={Styles.title}>
-        <ul> BEM VINDO(A): Usuário</ul>
+        <ul> BEM VINDO(A) </ul>
+        </div> 
+        </div>
+        <div className={Styles.naav}>
+
+        <div>
         </div>
         </div>
-        <nav className={Styles.nav}> consultar acervo sair </nav>
-      </header>
+          
+          </header>
 
     );
   };
