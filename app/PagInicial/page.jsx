@@ -78,6 +78,7 @@ const PagInicialSemCadastro = (props) => {
                         </button>
                         <label>Cadastrar colaborador</label>
                     </div>
+
                 </div>
 
             </div>
