@@ -2,6 +2,11 @@
 import { useState } from "react";
 import Style from '@/app/CColaborador/colaborador.module.css';
 
+    const onButtonClick =  () => {
+        alert('Colaborador Cadastrado');
+    }
+
+
 const CADASTRO = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -11,25 +16,9 @@ const CADASTRO = () => {
     const [dados, setDados] = useState("");
     const [senha, setSenha] = useState("");
 
-    const onButtonClick = () => {
-        // You'll update this function later...
-    }
-
     return (
         <>
             
-            <input type="text"
-                value={dados}
-                placeholder="Dados pessoais"
-                onChange={(e) => setDados(e.target.value)} require
-                className={Style.inputBox} />
-
-            <input type="password"
-                value={senha}
-                placeholder="Senha"
-                onChange={(e) => setSenha(e.target.value)} require 
-                className={Style.inputType}/>
-
             <br></br>
 
             <p className={Style.title} >
@@ -70,13 +59,7 @@ const CADASTRO = () => {
                 <input type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} required />
-                <br></br>
-
-                <form className={Style.email}>
-
-                    <input type="checkbox" id="e-mail" name="e-mail" value="E-mail" /><label for="e-mail">Receber e-mail </label>
-
-                </form>
+               
 
                 <br></br>
 
@@ -97,7 +80,7 @@ const CADASTRO = () => {
 
                 <br />
                 <div className={Style.inputContainer}>
-                    <input className={Style.inputButton} type="button" onClick={onButtonClick} value={'Registrar'} />
+                    <input className={Style.inputButton} type="submit" onClick={onButtonClick} value={'Registrar'} />
                 </div>
             </form>
 
