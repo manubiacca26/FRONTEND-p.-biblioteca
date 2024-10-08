@@ -37,6 +37,7 @@ const CADASTRO = () => {
                 <label>Telefone:</label>
                 <input type="number"
                     value={telefone}
+                    pattern='[0-11]{11}'
                     onChange={(e) => setTelefone(e.target.value)} required />
 
                 <br />
@@ -44,7 +45,9 @@ const CADASTRO = () => {
                 <label>CPF:</label>
                 <input type="number"
                     value={CPF}
+                    pattern='[0-11]{11}'
                     onChange={(e) => setCPF(e.target.value)} required />
+                    
 
                 <br />
 
