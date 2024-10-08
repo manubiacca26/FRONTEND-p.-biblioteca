@@ -45,6 +45,7 @@ const PagInicialSemCadastro = (props) => {
                         <label>Catalogação</label>
                     </div>
                 </div>
+                <br/>
 
 
                 <div className={Style.flexBotao1}>
@@ -58,7 +59,7 @@ const PagInicialSemCadastro = (props) => {
                         </button>
                         <label>Situação do Livro</label>
                     </div>
-
+                    <br/>
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
@@ -68,7 +69,7 @@ const PagInicialSemCadastro = (props) => {
                         </button>
                         <label>Reserva</label>
                     </div>
-
+                    <br/>
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
@@ -78,7 +79,7 @@ const PagInicialSemCadastro = (props) => {
                         </button>
                         <label>Cadastrar colaborador</label>
                     </div> 
-
+                    <br/>
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
