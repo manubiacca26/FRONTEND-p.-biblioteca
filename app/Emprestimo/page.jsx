@@ -11,11 +11,23 @@ export default function Emprestimo() {
     const [aluno, setAluno] = useState(null);
     const [livros, setLivros] = useState(null);
     const [colaborador, setColaborador] = useState('');
+    const [mensagemSucesso, setMensagemSucesso] = useState('');
+    const [mensagemErro, setMensagemErro] = useState('');
+    const [mensagemErroAluno, setMensagemErroAluno] = useState('');
+    const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
+    const [mensagemErroColaborador, setMensagemErroColaborador] = useState('');
 
     useEffect(() => {
         const today = new Date().toISOString().split('T')[0];
         setDataEmprestimo(today);
     }, []);
+
+    const formatarData = (data) => {
+        const dataObj = new Date(data);
+        dataObj.setDate(dataObj.getDate() + 1); // Adiciona um dia
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return dataObj.toLocaleDateString('pt-BR', options);
+    };
 
     const calcularDataDevolucao = (data) => {
         const emprestimoDate = new Date(data);
@@ -42,59 +54,19 @@ export default function Emprestimo() {
             });
 
             if (response.ok) {
-                alert('Empréstimo criado com sucesso!');
-                await atualizarSituacaoLivro(Exemplar);
+                setMensagemSucesso('Empréstimo criado com sucesso!');
+                setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
+
             } else {
-                alert('Erro ao criar empréstimo: ' + response.status);
+                const errorMessage = `Erro ao criar empréstimo, dados inválidos`;
+                setMensagemErro(errorMessage);
+                setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
         } catch (error) {
-            alert('Erro ao criar empréstimo: ' + error);
+            setMensagemErro('Erro ao criar empréstimo: ' + error);
+            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
-
-    // Função para atualizar a situação do livro
-    const atualizarSituacaoLivro = async (Exemplar) => {
-        try {
-            // Buscar o exemplar atual
-            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
-            if (!response.ok) {
-                throw new Error('Erro ao buscar o exemplar: ' + response.status);
-            }
-
-            const exemplarData = await response.json();
-            console.log('Dados do exemplar:', exemplarData);
-
-            // Atualizar apenas o campo Situacao
-            const updatedData = {
-                Exemplar: exemplarData.Exemplar,
-                nChamada: exemplarData.nChamada,
-                Assunto: exemplarData.Assunto,
-                ISBN: exemplarData.ISBN,
-                Quantidade: exemplarData.Quantidade,
-                Título: exemplarData.Título,
-                Autor: exemplarData.Autor,
-                Acervo: exemplarData.Acervo,
-                Situacao: 'Emprestado',
-                // Inclua outros campos que você deseja preservar
-            };
-
-            // Enviar a atualização para o servidor
-            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedData),
-            });
-
-            if (updateResponse.ok) {
-                console.log('Situação do livro atualizada para "emprestado" com sucesso!');
-            } else {
-                alert('Erro ao atualizar a situação do livro: ' + updateResponse.status);
-            }
-        } catch (error) {
-            alert('Erro ao atualizar a situação do livro: ' + error);
-        }
-    };
-
 
 
     const isRMDisabled = RM.length > 0;
@@ -108,11 +80,15 @@ export default function Emprestimo() {
                 if (response.ok) {
                     const alunoData = await response.json();
                     setAluno(alunoData);
+                    setMensagemErroAluno(''); // Limpa a mensagem de erro, se houver
                 } else {
-                    alert('Erro ao buscar aluno: ' + response.status);
+                    const errorMessage = `Erro ao buscar aluno: ${response.status}`;
+                    setMensagemErroAluno(errorMessage);
+                    setTimeout(() => setMensagemErroAluno(''), 3000); // Limpa a mensagem de erro após 3 segundos
                 }
             } catch (error) {
-                alert('Erro ao buscar aluno: ' + error);
+                setMensagemErroAluno('Erro ao buscar aluno: ' + error);
+                setTimeout(() => setMensagemErroAluno(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
         }
     };
@@ -125,11 +101,15 @@ export default function Emprestimo() {
                 if (response.ok) {
                     const colaboradorData = await response.json();
                     setColaborador(colaboradorData);
+                    setMensagemErroColaborador(''); // Limpa a mensagem de erro, se houver
                 } else {
-                    alert('Erro ao buscar Colaborador: ' + response.status);
+                    const errorMessage = `Erro ao buscar Colaborador: ${response.status}`;
+                    setMensagemErroColaborador(errorMessage);
+                    setTimeout(() => setMensagemErroColaborador(''), 3000); // Limpa a mensagem de erro após 3 segundos
                 }
             } catch (error) {
-                alert('Erro ao buscar Colaborador: ' + error);
+                setMensagemErroColaborador('Erro ao buscar Colaborador: ' + error);
+                setTimeout(() => setMensagemErroColaborador(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
         }
     };
@@ -140,14 +120,17 @@ export default function Emprestimo() {
             if (response.ok) {
                 const exemplarData = await response.json();
                 setLivros(exemplarData);
+                setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
             } else {
-                alert('Erro ao buscar Exemplar: ' + response.status);
+                const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
+                setMensagemErroExemplar(errorMessage);
+                setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
         } catch (error) {
-            alert('Erro ao buscar Exemplar: ' + error);
+            setMensagemErroExemplar('Erro ao buscar Exemplar: ' + error);
+            setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
-
     const limparCredenciais = () => {
         setRM('');
         setCPF('');
@@ -157,11 +140,37 @@ export default function Emprestimo() {
 
     const limparExemplar = () => {
         setLivros('');
+        setExemplar('');
     };
 
 
     return (
         <form onSubmit={createEmprestimo}>
+            {mensagemSucesso && (
+                <div className={Styles.notificacao}>
+                    {mensagemSucesso}
+                </div>
+            )}
+            {mensagemErro && (
+                <div className={Styles.notificacaoErro}>
+                    {mensagemErro}
+                </div>
+            )}
+            {mensagemErroAluno && (
+                <div className={Styles.notificacaoErro}>
+                    {mensagemErroAluno}
+                </div>
+            )}
+            {mensagemErroExemplar && (
+                <div className={Styles.notificacaoErro}>
+                    {mensagemErroExemplar}
+                </div>
+            )}
+            {mensagemErroColaborador && (
+                <div className={Styles.notificacaoErro}>
+                    {mensagemErroColaborador}
+                </div>
+            )}
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
                     <input
@@ -171,6 +180,7 @@ export default function Emprestimo() {
                         value={RM}
                         onChange={(e) => setRM(e.target.value)}
                         disabled={isCPFDisabled}
+                        required
                     />
                     <input
                         className={Styles.inputBox}
@@ -179,36 +189,75 @@ export default function Emprestimo() {
                         value={CPF}
                         onChange={(e) => setCPF(e.target.value)}
                         disabled={isRMDisabled}
+                        required
+
                     />
                 </div>
-                <button type="button" onClick={() => { buscarAluno(); buscarColaborador(); }}>Buscar</button>
-                <button type="button" onClick={limparCredenciais}>Limpar</button>
+                <button className={Styles.inputButton} type="button" onClick={() => { buscarAluno(); buscarColaborador(); }}>Buscar</button>
+                <button className={Styles.inputButton} type="button" onClick={limparCredenciais}>Limpar</button>
             </div>
 
             <div className={Styles.infoAlunoColabExem}>
                 <div className={Styles.agruparLista}>
-                    <p>INFORMAÇÕES DA PESSOA:</p>
-                    <ul className={Styles.userList}>
-
-                        {aluno && (
-                            <>
-                                <li>Nome: {aluno.Nome}</li>
-                                <li>RM: {aluno.RM}</li>
-                                <li>Sexo: {aluno.Sexo}</li>
-                                <li>Data Nascimento: {aluno.Data_Nascimento}</li>
-                            </>
-                        )}
-                        {colaborador && (
-                            <>
-                                <li>CPF: {colaborador.cpf}</li>
-                                <li>Nome: {colaborador.nome}</li>
-                                <li>Sexo: {colaborador.Sexo}</li>
-                                <li>Telefone: {colaborador.telefone}</li>
-                                <li>Data Nascimento: {colaborador.dataNasc}</li>
-                                <li>Email: {colaborador.email}</li>
-                            </>
-                        )}
-                    </ul>
+                    <h3>Informações leitor</h3>
+                    <table className={Styles.userTable}>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Credencial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {aluno && (
+                                <>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>{aluno.Nome}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>RM</td>
+                                        <td>{aluno.RM}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sexo</td>
+                                        <td>{aluno.Sexo}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Nascimento</td>
+                                        <td>{formatarData(aluno.Data_Nascimento)}</td>
+                                    </tr>
+                                </>
+                            )}
+                            {colaborador && (
+                                <>
+                                    <tr>
+                                        <td>CPF</td>
+                                        <td>{colaborador.cpf}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>{colaborador.nome}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sexo</td>
+                                        <td>{colaborador.Sexo}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Telefone</td>
+                                        <td>{colaborador.telefone}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Nascimento</td>
+                                        <td>{colaborador.dataNasc}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>{colaborador.email}</td>
+                                    </tr>
+                                </>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -222,28 +271,55 @@ export default function Emprestimo() {
                         onChange={(e) => setExemplar(e.target.value)}
                     />
                 </div>
-                <button type="button" onClick={() => { buscarExemplar() }}>Buscar</button>
-                <button type="button" onClick={limparExemplar}>Limpar</button>
+                <button className={Styles.inputButton} type="button" onClick={() => { buscarExemplar() }}>Buscar</button>
+                <button className={Styles.inputButton} type="button" onClick={limparExemplar}>Limpar</button>
             </div>
 
             <div className={Styles.infoAlunoColabExem}>
                 <div className={Styles.agruparLista}>
-                    <p>INFORMAÇÕES SOBRE O EXEMPLAR:</p>
-                    <ul className={Styles.userList}>
-                        {livros && (
-                            <>
-                                <li>Exemplar: {livros.Exemplar}</li>
-                                <li>Número de Chamada: {livros.nChamada}</li>
-                                <li>Assunto: {livros.Assunto}</li>
-                                <li>ISBN: {livros.ISBN}</li>
-                                <li>Quantidade: {livros.Quantidade}</li>
-                                <li>Título: {livros.Título}</li>
-                                <li>Autor: {livros.Autor}</li>
-                                <li>Acervo: {livros.Acervo}</li>
-                                <li>Situação: {livros.Situacao}</li>
-                            </>
-                        )}
-                    </ul>
+                    <h3>Informações sobre o exemplar</h3>
+                    <table className={Styles.userTable}>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Credencial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {livros && (
+                                <>
+                                    <tr>
+                                        <td>Exemplar</td>
+                                        <td>{livros.Exemplar}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Número de Chamada</td>
+                                        <td>{livros.nChamada}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assunto</td>
+                                        <td>{livros.Assunto}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ISBN</td>
+                                        <td>{livros.ISBN}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Título</td>
+                                        <td>{livros.Título}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Autor</td>
+                                        <td>{livros.Autor}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acervo</td>
+                                        <td>{livros.Acervo}</td>
+                                    </tr>
+                                </>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -254,13 +330,14 @@ export default function Emprestimo() {
                     type="date"
                     value={dataEmprestimo}
                     onChange={(e) => setDataEmprestimo(e.target.value)}
+                    required
                 />
 
             </div>
 
 
             <div className={Styles.divCreate}>
-                <button type="submit">Criar Empréstimo</button>
+                <button className={Styles.inputButton} type="submit">Criar Empréstimo</button>
             </div>
 
         </form>
