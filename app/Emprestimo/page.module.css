@@ -3,39 +3,32 @@
   flex-direction: column;
   justify-content: space-around;
   margin-left: 0.5%;
-
 }
 
 .divInput input {
   margin-top: 1%;
-
 }
 
 .divBusca {
   margin-left: 2%;
-
 }
 
 .divBusca button {
   margin-top: 1%;
   margin-left: 0.5%;
-
 }
 
 .divDate {
   margin-left: 1.5%;
-
 }
 
 .divDate input {
   margin-left: 1%;
-
 }
 
 .divCreate {
   margin-left: 2%;
   margin-top: 1%;
-
 }
 
 .infoAlunoColabExem {
@@ -52,17 +45,14 @@
 }
 
 .agruparLista {
-
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
 }
 
 .userList {
   margin-top: 10%;
-  list-style-type: none ;
-
+  list-style-type: none;
 }
 
 .button {
@@ -83,7 +73,6 @@
   cursor: pointer;
 }
 
-
 .inputBox {
   height: 25px;
   width: 250px;
@@ -94,52 +83,52 @@
 }
 
 .userTable {
-  width: 100%; /* Faz a tabela ocupar toda a largura disponível */
-  border-collapse: collapse; /* Remove espaços entre as células */
-  margin-top: 20px; /* Espaço acima da tabela */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .userTable th, .userTable td {
-  border: 1px solid #ddd; /* Adiciona uma borda suave às células */
-  padding: 8px; /* Espaçamento interno nas células */
-  text-align: left; /* Alinha o texto à esquerda */
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
 .userTable th {
-  background-color: #f2f2f2; /* Cor de fundo para o cabeçalho */
-  font-weight: bold; /* Negrito para o texto do cabeçalho */
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 .userTable tr:nth-child(even) {
-  background-color: #f9f9f9; /* Cor de fundo alternada para linhas pares */
+  background-color: #f9f9f9;
 }
 
 .userTable tr:hover {
-  background-color: #f1f1f1; /* Cor de fundo ao passar o mouse sobre a linha */
+  background-color: #f1f1f1;
 }
 
 .notificacao {
-  position: fixed; /* Fixa a notificação na tela */
-  top: 20px; /* Distância do topo */
-  left: 50%; /* Centraliza horizontalmente */
-  transform: translateX(-50%); /* Ajusta a posição para centralizar */
-  background-color: #4CAF50; /* Cor de fundo verde */
-  color: white; /* Cor do texto */
-  padding: 15px; /* Espaçamento interno */
-  border-radius: 5px; /* Bordas arredondadas */
-  z-index: 1000; /* Fica acima de outros elementos */
-  transition: opacity 0.5s ease; /* Transição suave */
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.5s ease;
 }
 
 .notificacaoErro {
-  position: fixed; /* Fixa a notificação na tela */
-  top: 70px; /* Distância do topo (abaixo da mensagem de sucesso) */
-  left: 50%; /* Centraliza horizontalmente */
-  transform: translateX(-50%); /* Ajusta a posição para centralizar */
-  background-color: #f44336; /* Cor de fundo vermelho */
-  color: white; /* Cor do texto */
-  padding: 15px; /* Espaçamento interno */
-  border-radius: 5px; /* Bordas arredondadas */
-  z-index: 1000; /* Fica acima de outros elementos */
-  transition: opacity 0.5s ease; /* Transição suave */
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f44336;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: opacity 0.5s ease;
 }

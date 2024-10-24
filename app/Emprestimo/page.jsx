@@ -38,6 +38,13 @@ export default function Emprestimo() {
     const createEmprestimo = async (e) => {
         e.preventDefault();
 
+        // Verifique se o exemplar está emprestado
+        if (livros && livros.Situacao === 'Emprestado') {
+            setMensagemErro('O exemplar já está emprestado. Não é possível criar o empréstimo.');
+            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+            return; // Impede a criação do empréstimo
+        }
+
         const requestBody = {
             Exemplar: Exemplar,
             RM: RM || null,
@@ -54,6 +61,15 @@ export default function Emprestimo() {
             });
 
             if (response.ok) {
+                // Atualizar a situação do exemplar para 'Emprestado'
+                await atualizarSituacaoExemplar(Exemplar, 'Emprestado');
+
+                // Atualizar o estado local para refletir a nova situação
+                setLivros(prevLivros => ({
+                    ...prevLivros,
+                    Situacao: 'Emprestado'
+                }));
+
                 setMensagemSucesso('Empréstimo criado com sucesso!');
                 setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
 
@@ -64,6 +80,43 @@ export default function Emprestimo() {
             }
         } catch (error) {
             setMensagemErro('Erro ao criar empréstimo: ' + error);
+            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+        }
+    };
+
+
+    // Função para atualizar a situação do exemplar
+    const atualizarSituacaoExemplar = async (exemplar, situacao) => {
+        try {
+            // Buscar o exemplar atual
+            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            if (!response.ok) {
+                throw new Error('Erro ao buscar o exemplar: ' + response.status);
+            }
+
+            const exemplarData = await response.json();
+
+            // Atualizar apenas o campo Situacao
+            const updatedData = {
+                ...exemplarData,
+                Situacao: situacao,
+                // Inclua outros campos que você deseja preservar
+            };
+
+            // Enviar a atualização para o servidor
+            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData),
+            });
+
+            if (!updateResponse.ok) {
+                const errorMessage = `Erro ao atualizar a situação do exemplar`;
+                setMensagemErro(errorMessage);
+                setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+            }
+        } catch (error) {
+            setMensagemErro('Erro ao atualizar a situação do exemplar: ' + error);
             setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
@@ -121,6 +174,13 @@ export default function Emprestimo() {
                 const exemplarData = await response.json();
                 setLivros(exemplarData);
                 setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
+
+                // Verifica se o exemplar está emprestado
+                if (exemplarData.Situacao === 'Emprestado') {
+                    setMensagemErroExemplar('O exemplar já está emprestado.');
+                    setTimeout(() => setMensagemErroExemplar(''), 3000);
+                    setLivros(null); // Limpa os dados do exemplar
+                }
             } else {
                 const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
                 setMensagemErroExemplar(errorMessage);
@@ -131,6 +191,7 @@ export default function Emprestimo() {
             setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
+
     const limparCredenciais = () => {
         setRM('');
         setCPF('');
@@ -143,9 +204,22 @@ export default function Emprestimo() {
         setExemplar('');
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede a ação padrão do Enter
+        }
+    };
+
+    const handleNumericInput = (e, setValue) => {
+        const value = e.target.value;
+        // Filtra apenas números
+        const numericValue = value.replace(/[^0-9]/g, '');
+        setValue(numericValue);
+    };
+
 
     return (
-        <form onSubmit={createEmprestimo}>
+        <form onKeyDown={handleKeyDown}>
             {mensagemSucesso && (
                 <div className={Styles.notificacao}>
                     {mensagemSucesso}
@@ -178,7 +252,7 @@ export default function Emprestimo() {
                         type="text"
                         placeholder="RM"
                         value={RM}
-                        onChange={(e) => setRM(e.target.value)}
+                        onChange={(e) => handleNumericInput(e, setRM)}
                         disabled={isCPFDisabled}
                         required
                     />
@@ -187,10 +261,9 @@ export default function Emprestimo() {
                         type="text"
                         placeholder="CPF"
                         value={CPF}
-                        onChange={(e) => setCPF(e.target.value)}
+                        onChange={(e) => handleNumericInput(e, setCPF)}
                         disabled={isRMDisabled}
                         required
-
                     />
                 </div>
                 <button className={Styles.inputButton} type="button" onClick={() => { buscarAluno(); buscarColaborador(); }}>Buscar</button>
@@ -268,7 +341,7 @@ export default function Emprestimo() {
                         type="text"
                         placeholder="Exemplar"
                         value={Exemplar}
-                        onChange={(e) => setExemplar(e.target.value)}
+                        onChange={(e) => handleNumericInput(e, setExemplar)}
                     />
                 </div>
                 <button className={Styles.inputButton} type="button" onClick={() => { buscarExemplar() }}>Buscar</button>
@@ -337,7 +410,7 @@ export default function Emprestimo() {
 
 
             <div className={Styles.divCreate}>
-                <button className={Styles.inputButton} type="submit">Criar Empréstimo</button>
+                <button className={Styles.inputButton} onClick={createEmprestimo} type="submit">Criar Empréstimo</button>
             </div>
 
         </form>

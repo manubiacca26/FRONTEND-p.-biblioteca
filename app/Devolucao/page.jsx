@@ -9,7 +9,21 @@ function Devolucao() {
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
     const [mensagemSucesso, setMensagemSucesso] = useState('');
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede a ação padrão do Enter
+        }
+    };
+
     const buscarEmprestimo = async () => {
+        // Verifica se o exemplar já está na lista
+        const exemplarExistente = livros.find(livro => livro.Exemplar === Exemplar);
+        if (exemplarExistente) {
+            setMensagemErroExemplar('Exemplar já identificado');
+            setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
+            return; // Sai da função se o exemplar já estiver na lista
+        }
+
         try {
             const response = await fetch(`http://localhost:3001/buscaremprestimo/${Exemplar}`, {
                 method: 'GET',
@@ -31,8 +45,10 @@ function Devolucao() {
     };
 
     const limparExemplar = () => {
-        setLivros([]); // Limpa todos os exemplares
         setExemplar('');
+    };
+    const limparTodos = () => {
+        setLivros([]);
     };
 
     const removerExemplar = (index) => {
@@ -41,11 +57,27 @@ function Devolucao() {
 
     // Função para formatar a data no formato brasileiro
     const formatarData = (data) => {
+        const dataComAjuste = new Date(new Date(data).setDate(new Date(data).getDate() + 1));
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        return new Date(data).toLocaleDateString('pt-BR', options);
+        return dataComAjuste.toLocaleDateString('pt-BR', options);
     };
 
-    const devolverExemplar = async (Exemplar) => {
+    const deletarEmprestimo = async (Exemplar) => {
+        try {
+            const response = await fetch(`http://localhost:3001/deletaremprestimo/${Exemplar}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao deletar o empréstimo: ' + response.status);
+            }
+        } catch (error) {
+            setMensagemErro('Erro ao deletar o empréstimo: ' + error);
+            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+        }
+    };
+
+    const devolverExemplar = async (Exemplar, index) => {
         try {
             // Buscar o exemplar atual
             const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
@@ -70,9 +102,12 @@ function Devolucao() {
             });
 
             if (updateResponse.ok) {
+                // Deletar o empréstimo
+                await deletarEmprestimo(Exemplar);
+                // Remover o exemplar da lista
+                removerExemplar(index);
                 setMensagemSucesso('Devolução feita com sucesso!');
                 setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
-
             } else {
                 const errorMessage = `Erro ao realizar devolução`;
                 setMensagemErro(errorMessage);
@@ -84,9 +119,29 @@ function Devolucao() {
         }
     };
 
+    const devolverTodosExemplares = async () => {
+        try {
+            for (let i = 0; i < livros.length; i++) {
+                await devolverExemplar(livros[i].Exemplar, i); // Chama devolverExemplar para cada exemplar
+            }
+            setMensagemSucesso('Todos os exemplares devolvidos com sucesso!');
+            setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
+        } catch (error) {
+            setMensagemErro('Erro ao devolver todos os exemplares: ' + error);
+            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+        }
+    };
+
+    const handleNumericInput = (e, setValue) => {
+        const value = e.target.value;
+        // Filtra apenas números
+        const numericValue = value.replace(/[^0-9]/g, '');
+        setValue(numericValue);
+    };
+
     return (
         <>
-            <form>
+            <form onKeyDown={handleKeyDown}>
                 {mensagemErroExemplar && (
                     <div className={Styles.notificacaoErro}>
                         {mensagemErroExemplar}
@@ -106,8 +161,8 @@ function Devolucao() {
                             className={Styles.inputBox}
                             type="text"
                             placeholder="Exemplar"
-                            onChange={(e) => setExemplar(e.target.value)}
                             value={Exemplar}
+                            onChange={(e) => handleNumericInput(e, setExemplar)}
                             required
                         />
                     </label>
@@ -150,12 +205,12 @@ function Devolucao() {
                                     <td className={Styles.ajuste}>
                                         <button
                                             className={Styles.devolveSolo}
-                                            onClick={() => devolverExemplar(livro.Exemplar)}
+                                            onClick={() => devolverExemplar(livro.Exemplar, index)}
                                         >
                                             Devolver
                                         </button>
-                                        </td>
-                                        <td>
+                                    </td>
+                                    <td>
                                         <button
                                             className={Styles.removerButton}
                                             onClick={() => removerExemplar(index)}
@@ -171,7 +226,11 @@ function Devolucao() {
                     </table>
                 </div>
             </div>
-            <button className={Styles.devolveTodos} onClick={() => devolverExemplar(Exemplar)}>Devolver Todos</button>
+            <button className={Styles.devolveTodos} onClick={async () => {
+                await devolverTodosExemplares(Exemplar);
+                limparTodos();
+            }}>Devolver Todos</button>
+            <button className={Styles.devolveTodos} onClick={limparTodos}>Limpar Todos</button>
         </>
     );
 }

@@ -37,25 +37,15 @@
   background: red;
   color: white;
   padding: 10px 25px;
-  margin-top: 1%;
   font-size: 15px;
-  border-radius: 8px;
-  cursor: pointer;
   margin-left: 1.5%;
-}
-
-.inputButton {
-  border: none;
-  background: red;
-  color: white;
-  padding: 10px 25px;
-  margin: 8px;
-  font-size: 15px;
+  margin-top: 1%;
   border-radius: 8px;
   cursor: pointer;
+  width: 10%;
 }
 
-.inputDevolver {
+.inputButton, .inputDevolver {
   border: none;
   background: red;
   color: white;
@@ -121,8 +111,7 @@
   margin-top: 20px;
 }
 
-.userTable th,
-.userTable td {
+.userTable th, .userTable td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
