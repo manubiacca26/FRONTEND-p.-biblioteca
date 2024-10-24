@@ -64,6 +64,7 @@ function Notificacao() {
                             <th>CPF</th>
                             <th>Data Emprestimo</th>
                             <th>Data Devolução</th>
+                            <th>Dias de Atraso</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,6 +81,10 @@ function Notificacao() {
                                     ? dataDevolucao.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
                                     : dataDevolucao;
 
+                                // Calcular os dias de atraso
+                                const hoje = new Date();
+                                const diasAtraso = Math.floor((hoje - dataDevolucao) / (1000 * 60 * 60 * 24)); // Diferença em dias
+
                                 return (
                                     <tr key={index}>
                                         <td>{livro.Exemplar}</td>
@@ -87,12 +92,13 @@ function Notificacao() {
                                         <td>{livro.CPF}</td>
                                         <td>{dataEmprestimoFormatada}</td>
                                         <td>{dataDevolucaoFormatada}</td>
+                                        <td>{diasAtraso > 0 ? diasAtraso : 0}</td> {/* Mostra os dias de atraso */}
                                     </tr>
                                 );
                             })
                         ) : (
                             <tr>
-                                <td colSpan="5">Nenhum exemplar em atraso.</td>
+                                <td colSpan="6">Nenhum exemplar em atraso.</td>
                             </tr>
                         )}
                     </tbody>

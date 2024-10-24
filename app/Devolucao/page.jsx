@@ -190,6 +190,7 @@ function Devolucao() {
                                 <th>Data Devolução</th>
                                 <th>Devolver Unidade</th>
                                 <th>Remover</th>
+                               
 
                             </tr>
                         </thead>
