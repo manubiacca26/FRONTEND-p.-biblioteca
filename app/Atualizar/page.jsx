@@ -1,8 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import Styles from '@/app/Atualizar/atualizacao.module.css'
-
-
+import { useRouter } from 'next/navigation';
 
 const Catalogo = (props) => {
     const [autor, setAutor] = useState('')
@@ -14,6 +13,36 @@ const Catalogo = (props) => {
     const [quantidade, setQuantidade] = useState('')
     const [id, setId] = React.useState('');
     const [ev, setEv] = React.useState('');
+
+
+    const searchUserById = async () => {
+        if (!searchId) return;  // Se o ID de busca estiver vazio, não faz nada
+    
+        try {
+          const res = await fetch(`http://localhost:3001/users/${searchId}`);  // Faz uma requisição GET para buscar o usuário pelo ID
+          if (res.ok) {  // Se a requisição for bem-sucedida
+            const data = await res.json();  // Converte a resposta para JSON
+            setSearchedUser(data);  // Atualiza o estado com os dados do usuário encontrado
+          } else {
+            setSearchedUser(null);  // Se o usuário não for encontrado, limpa o estado
+            alert("Usuário não encontrado.");  // Exibe um alerta informando que o usuário não foi encontrado
+          }
+        } catch (error) {
+          console.error("Erro ao buscar o usuário:", error);  // Captura e exibe erros no console, caso ocorram
+        }
+      };
+    
+      // Função assíncrona para deletar um usuário
+      const deleteUser = async (id) => {
+        try {
+          await fetch(`http://localhost:3001/users/${id}`, { method: 'DELETE' });  // Faz uma requisição DELETE para remover o usuário pelo ID
+          setSearchedUser(null);  // Limpa o estado após a exclusão
+          alert('Usuário deletado com sucesso');  // Exibe uma mensagem de sucesso após a exclusão
+        } catch (error) {
+          console.error("Erro ao deletar o usuário:", error);  // Captura e exibe erros no console, caso ocorram
+        }
+      }
+}
 
 
     const onButtonClick = () => {
@@ -115,4 +144,4 @@ const Catalogo = (props) => {
     )
 }
 
-export default Catalogo
+export default Catalogo 
