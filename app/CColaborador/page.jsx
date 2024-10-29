@@ -7,14 +7,16 @@ import styles from '@/app/CColaborador/colaborador.module.css';
 export default function CreateUserPage() {
   const [telefone, setTelefone] = useState('');
   const [Dnasc, setDnasc] = useState('');
-  const [CPF, setCPF] = useState('');
-  const [name, setName] = useState('');  // Declara o estado para o nome do usuário, inicialmente vazio
+  const [cpf, setCPF] = useState('');
+  const [nome, setNome] = useState('');  // Declara o estado para o nome do usuário, inicialmente vazio
   const [email, setEmail] = useState('');  // Declara o estado para o email do usuário, inicialmente vazio
-  
+  const [mensagemErro, setMensagemErro] = useState('');
+  const [mensagemSucesso, setMensagemSucesso] = useState('');
+
 
   // Função para lidar com a mudança do telefone
   const testetele = (e) => {
-    const value = e.target.value; 
+    const value = e.target.value;
     if (value.length < 15) {
       setTelefone(value);
     }
@@ -29,35 +31,58 @@ export default function CreateUserPage() {
 
   // Função assíncrona para criar um novo usuário ao submeter o formulário
   const createUser  = async (e) => {
-    e.preventDefault();  // Previne o comportamento padrão do formulário (recarregar a página)
+    e.preventDefault();
 
-    await fetch('http://localhost:3001/registrarcolaborador', {  // Faz uma requisição POST para o backend com os dados do usuário
-      method: 'POST',  // Define o método como POST para criar um novo usuário
-      headers: { 'Content-Type': 'application/json' },  // Define o cabeçalho da requisição para enviar dados em JSON
-      body: JSON.stringify({ 
-        name, 
-        email, 
-        telefone, 
-        CPF, 
-        Dnasc 
-      }),  // Converte o objeto dos dados do usuário para JSON
-    });
+    try {
+        const response = await fetch('http://localhost:3001/registrarcolaborador', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome,
+                email,
+                telefone,
+                cpf,
+                Dnasc
+            }),
+        });
 
+        if (response.ok) {
+            setMensagemSucesso('Usuário criado com sucesso!');
+            setTimeout(() => setMensagemSucesso(''), 3000);
+        } else {
+            const errorMessage = `Erro ao criar usuário, dados inválidos`;
+            setMensagemErro(errorMessage);
+            setTimeout(() => setMensagemErro(''), 3000);
+        }
+    } catch (error) {
+        setMensagemErro('Erro ao criar usuário: ' + error);
+        setTimeout(() => setMensagemErro(''), 3000);
+    }
+};
 
-  };
 
   return (
     <>
       <p className={styles.title}>
         <label>Cadastro de Colaborador</label>
       </p>
-    
-      <form onSubmit={createUser} className={styles.form}>
+
+      <form className={styles.form}>
+        {mensagemSucesso && (
+          <div className={styles.notificacao}>
+            {mensagemSucesso}
+          </div>
+        )}
+        {mensagemErro && (
+          <div className={styles.notificacaoErro}>
+            {mensagemErro}
+          </div>
+        )}
         <br />
         <label>Nome Completo:</label>
         <input type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)} required />
+          value={nome}
+          onChange={(e) => setNome(e.target.value)} required />
 
         <br />
 
@@ -65,16 +90,16 @@ export default function CreateUserPage() {
         <input type="text"
           value={telefone}
           onChange={testetele}  // Agora testetele está definido no escopo do componente
-          required            
+          required
           maxLength={15}
           placeholder="Digite seu telefone" />
         <br />
 
         <label>CPF:</label>
         <input type="text"
-          value={CPF}
+          value={cpf}
           onChange={testecpf}
-          required 
+          required
           maxLength={14}
           placeholder="Digite seu CPF" />
 
@@ -89,7 +114,7 @@ export default function CreateUserPage() {
           min="1979-12-31"
           max="2020-01-02"
           required
-        /> <br/>
+        /> <br />
 
         <label>Email:</label>
         <input
@@ -101,11 +126,11 @@ export default function CreateUserPage() {
         />
         <br />
 
-       
+
 
         <br />
         <div className={styles.inputContainer}>
-          <button className={styles.inputButton} onClick={createUser} type="submit">Criar</button> 
+          <button className={styles.inputButton} onClick={createUser} type="submit">Criar</button>
         </div>
       </form>
     </>
