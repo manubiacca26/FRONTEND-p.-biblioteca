@@ -86,7 +86,7 @@ export default function Emprestimo() {
 
 
     // Função para atualizar a situação do exemplar
-    const atualizarSituacaoExemplar = async (exemplar, situacao) => {
+    const atualizarSituacaoExemplar = async (situacao) => {
         try {
             // Buscar o exemplar atual
             const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
