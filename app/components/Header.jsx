@@ -16,7 +16,7 @@ const Header = () => {
         <ul>CE242 - Vinhedo</ul>
         </div>
         <div className={Styles.title}>
-        <ul> BEM VINDO(A) </ul>
+        <p> BEM VINDO(A) </p>
         </div> 
         </div>
         <div className={Styles.naav}>
