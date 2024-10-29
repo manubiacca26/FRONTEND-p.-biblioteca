@@ -51,30 +51,36 @@ export default function CreateUserPage() {
     <label>Telefone:</label>
                 <input type="number"
                     value={telefone}
-                    onChange={(e) => setTelefone(e.target.value)} required />
+                    onChange={(e) => setTelefone(e.target.value)} max="14" required />
 
                 <br />
 
         
                 <label>CPF:</label>
                 <input type="number"
+                    placeholder="Digite um CPF no formato: xxx.xxx.xxx-xx"
+                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
                     value={CPF}
                     onChange={(e) => setCPF(e.target.value)} required />
 
                 <br />
 
                 <label>Data de Nascimento:</label>
-                <input type="date"
+                <input
+                    className={styles.inputBox}
+                    type="date"
                     value={Dnasc}
-                    onChange={(e) => setDnasc(e.target.value)} required />
-
-                <br />
+                    onChange={(e) => setDnasc(e.target.value)}
+                    min="1979-12-31"
+                    max="2020-01-02"
+                    required
+                />
 
         <input
           type="email"
           placeholder="Email"
           value={email}  // O valor do campo é controlado pelo estado email
-          onChange={(e) => setEmail(e.target.value)}  // Atualiza o estado email com o valor digitado pelo usuário
+          onChange={(e) => setEmail(e.target.value)} required // Atualiza o estado email com o valor digitado pelo usuário
           className={styles.input}  /* Aplica o estilo de input definido no CSS Module */
         />
         <br></br>
