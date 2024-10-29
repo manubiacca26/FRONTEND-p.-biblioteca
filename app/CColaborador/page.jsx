@@ -29,7 +29,6 @@ export default function CreateUserPage() {
       }),  // Converte o objeto dos dados do usuário para JSON
     });
 
-
     router.push('/users');  // Redireciona para a página de listagem de usuários após a criação bem-sucedida
   };
 
@@ -52,24 +51,30 @@ export default function CreateUserPage() {
     <label>Telefone:</label>
                 <input type="number"
                     value={telefone}
-                    onChange={(e) => setTelefone(e.target.value)} required />
+                    onChange={(e) => setTelefone(e.target.value)} max="14" required />
 
                 <br />
 
         
                 <label>CPF:</label>
                 <input type="number"
+                    placeholder="Digite um CPF no formato: xxx.xxx.xxx-xx"
+                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
                     value={CPF}
                     onChange={(e) => setCPF(e.target.value)} required />
 
                 <br />
 
                 <label>Data de Nascimento:</label>
-                <input type="date"
+                <input
+                    className={styles.inputBox}
+                    type="date"
                     value={Dnasc}
-                    onChange={(e) => setDnasc(e.target.value)} required />
-
-                <br />
+                    onChange={(e) => setDnasc(e.target.value)}
+                    min="1979-12-31"
+                    max="2020-01-02"
+                    required
+                />
 
         <input
           type="email"
