@@ -1,9 +1,9 @@
 "use client"
+
 import React, { useState } from 'react'
 import Styles from '@/app/Atualizar/atualizacao.module.css'
-import { useRouter } from 'next/navigation';
 
-const Catalogo = (props) => {
+export default function Catalogo() {
     const [autor, setAutor] = useState('')
     const [titulo, setTitulo] = useState('')
     const [assunto, setAssunto] = useState('')
@@ -11,137 +11,179 @@ const Catalogo = (props) => {
     const [acervo, setAcervo] = useState('')
     const [ISBN, setISBN] = useState('')
     const [quantidade, setQuantidade] = useState('')
-    const [id, setId] = React.useState('');
-    const [ev, setEv] = React.useState('');
+    const [Exemplar, setExemplar] = useState('');
+    const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
+    const [mensagemSucesso, setMensagemSucesso] = useState('');
 
-
-    const searchUserById = async () => {
-        if (!searchId) return;  // Se o ID de busca estiver vazio, não faz nada
-    
+    const buscarExemplar = async () => {
         try {
-          const res = await fetch(`http://localhost:3001/users/${searchId}`);  // Faz uma requisição GET para buscar o usuário pelo ID
-          if (res.ok) {  // Se a requisição for bem-sucedida
-            const data = await res.json();  // Converte a resposta para JSON
-            setSearchedUser(data);  // Atualiza o estado com os dados do usuário encontrado
-          } else {
-            setSearchedUser(null);  // Se o usuário não for encontrado, limpa o estado
-            alert("Usuário não encontrado.");  // Exibe um alerta informando que o usuário não foi encontrado
-          }
+            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            if (!response.ok) {
+                throw new Error('Erro ao buscar o exemplar: ' + response.status);
+            }
+
+            const exemplarData = await response.json();
+            // Preencher os inputs com os dados do exemplar
+            setAutor(exemplarData.Autor);
+            setTitulo(exemplarData.Título);
+            setAssunto(exemplarData.Assunto);
+            setNumero(exemplarData.nChamada);
+            setAcervo(exemplarData.Acervo);
+            setISBN(exemplarData.ISBN);
+            setQuantidade(exemplarData.Quantidade);
+            setMensagemSucesso('Exemplar encontrado com sucesso!');
+            setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem de sucesso após 3 segundos
         } catch (error) {
-          console.error("Erro ao buscar o usuário:", error);  // Captura e exibe erros no console, caso ocorram
+            setMensagemErroExemplar('Erro ao buscar o exemplar: ' + error);
+            setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
-      };
-    
-      // Função assíncrona para deletar um usuário
-      const deleteUser = async (id) => {
+    };
+
+    const registrarExemplar = async () => {
+        const situacao = 'Atualizado'; // Defina a situação que você deseja
+        await atualizarExemplar(autor, assunto, numero, acervo, ISBN, quantidade, titulo, situacao);
+    };
+
+    const atualizarExemplar = async (autor, assunto, nChamada, acervo, ISBN, quantidade, titulo, situacao) => {
         try {
-          await fetch(`http://localhost:3001/users/${id}`, { method: 'DELETE' });  // Faz uma requisição DELETE para remover o usuário pelo ID
-          setSearchedUser(null);  // Limpa o estado após a exclusão
-          alert('Usuário deletado com sucesso');  // Exibe uma mensagem de sucesso após a exclusão
+            const updatedData = {
+                Autor: autor,
+                Título: titulo,
+                Assunto: assunto,
+                nChamada: nChamada,
+                Acervo: acervo,
+                ISBN: ISBN,
+                Quantidade: quantidade,
+                Situacao: situacao,
+            };
+
+            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData),
+            });
+
+            if (!updateResponse.ok) {
+                const errorMessage = `Erro ao atualizar a situação do exemplar`;
+                setMensagemErroExemplar(errorMessage);
+                setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
+            } else {
+                setMensagemSucesso('Exemplar atualizado com sucesso!');
+                setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem de sucesso após 3 segundos
+            }
         } catch (error) {
-          console.error("Erro ao deletar o usuário:", error);  // Captura e exibe erros no console, caso ocorram
+            setMensagemErroExemplar('Erro ao atualizar a situação do exemplar: ' + error);
+            setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
-      }
-}
-
-
-    const onButtonClick = () => {
-        // You'll update this function later...
-    }
-
+    };
 
     return (
         <>
-            <div className={Styles.div1}>
-                <label className={Styles.form}>
-                    <input className={Styles.inputB} type="text" name="codigodolivro" placeholder="Código do Livro" onChange={(e) => setId (e.target.value)} value={id} required />
-                </label>
-                <button onClick={() => setId('')} type="button">Limpar</button>
-                <button onClick={() => setEv('')} type="submit">Enviar</button>
+            <form onSubmit={(e) => e.preventDefault()}>
+                {mensagemSucesso && (
+                    <div className={Styles.notificacao}>
+                        {mensagemSucesso}
+                    </div>
+                )}
+    
+                {mensagemErroExemplar && (
+                    <div className={Styles.notificacaoErro}>
+                        {mensagemErroExemplar}
+                    </div>
+                )}
+    
+                <div className={Styles.div1}>
+                    <label className={Styles.form}>
+                        <input
+                            className={Styles.inputB}
+                            type="text"
+                            name="codigodolivro"
+                            placeholder="Código do Livro"
+                            onChange={(e) => setExemplar(e.target.value)}
+                            value={Exemplar} required />
+                    </label>
+                    <button onClick={buscarExemplar} type="button">Buscar</button>
+                    <button onClick={() => setExemplar('')} type="button">Limpar</button>
                 </div>
-        
-            <div className={Styles.inputContainer}>
-                <p>
-                    Nome do autor:
-                </p>
-                <input
-                    value={autor}
-                    onChange={(ev) => setAutor(ev.target.value)}
-                    className={Styles.inputBox} required>
-
-                </input>
-            </div>
-            <div className={Styles.inputContainer}>
-                <p>
-                    Título do exemplar:
-                </p>
-                <input
-                    value={titulo}
-                    onChange={(ev) => setTitulo(ev.target.value)}
-                    className={Styles.inputBox} required>
-                </input>
-            </div>
-            <div className={Styles.inputContainer}>
-                <p>
-                    Código do assunto:
-                </p>
-                <input
-                    value={assunto}
-                    onChange={(ev) => setAssunto(ev.target.value)}
-                    className={Styles.inputBox} required>
-                </input>
-            </div>
-
-            <div className={Styles.inputContainer}>
-                <p>
-                    Número de chamada:
-                </p>
-                <input
-                    value={numero}
-                    onChange={(ev) => setNumero(ev.target.value)}
-                    className={Styles.inputBox} required>
-                </input>
-            </div>
-
-            <div className={Styles.inputContainer}>
-                <p>
-                    Acervo:
-                </p>
-                <input
-                    value={acervo}
-                    onChange={(ev) => setAcervo(ev.target.value)}
-                    className={Styles.inputBox} required>
-                </input>
-            </div>
-
-            <div className={Styles.inputContainer}>
-                <p>
-                    ISBN:
-                </p>
-                <input
-                    value={ISBN}
-                    onChange={(ev) => setISBN(ev.target.value)}
-                    className={Styles.inputBox} required>
-                </input>
-            </div>
-
-            <div className={Styles.inputContainer}>
-                <p>
-                    Quantidade:
-                </p>
-                <input
-                    value={quantidade}
-                    onChange={(ev) => setQuantidade(ev.target.value)}
-                    className={Styles.inputBox} required>
-                </input>
-            </div>
-
-            <div className={Styles.inputContainer}>
-                <input className={Styles.inputButton} type="button" onClick={onButtonClick} value={'Registrar'} />
-            </div>
-
+    
+                <div className={Styles.inputContainer}>
+                    <p>
+                        Nome do autor:
+                    </p>
+                    <input
+                        value={autor}
+                        onChange={(ev) => setAutor(ev.target.value)}
+                        className={Styles.inputBox}>
+                    </input>
+                </div>
+                <div className={Styles.inputContainer}>
+                    <p>
+                        Título do exemplar:
+                    </p>
+                    <input
+                        value={titulo}
+                        onChange={(ev) => setTitulo(ev.target.value)}
+                        className={Styles.inputBox} required>
+                    </input>
+                </div>
+                <div className={Styles.inputContainer}>
+                    <p>
+                        Código do assunto:
+                    </p>
+                    <input
+                        value={assunto}
+                        onChange={(ev) => setAssunto(ev.target.value)}
+                        className={Styles.inputBox} required>
+                    </input>
+                </div>
+    
+                <div className={Styles.inputContainer}>
+                    <p>
+                        Número de chamada:
+                    </p>
+                    <input
+                        value={numero}
+                        onChange={(ev) => setNumero(ev.target.value)}
+                        className={Styles.inputBox} required>
+                    </input>
+                </div>
+    
+                <div className={Styles.inputContainer}>
+                    <p>
+                        Acervo:
+                    </p>
+                    <input
+                        value={acervo}
+                        onChange={(ev) => setAcervo(ev.target.value)}
+                        className={Styles.inputBox} required>
+                    </input>
+                </div>
+    
+                <div className={Styles.inputContainer}>
+                    <p>
+                        ISBN:
+                    </p>
+                    <input
+                        value={ISBN}
+                        onChange={(ev) => setISBN(ev.target.value)}
+                        className={Styles.inputBox} required>
+                    </input>
+                </div>
+    
+                <div className={Styles.inputContainer}>
+                    <p>
+                        Quantidade:
+                    </p>
+                    <input
+                        value={quantidade}
+                        onChange={(ev) => setQuantidade(ev.target.value)}
+                        className={Styles.inputBox} required>
+                    </input>
+                </div>
+    
+                <div className={Styles.inputContainer}>
+                    <input className={Styles.inputButton} type="button" value={'Registrar'} onClick={registrarExemplar} />
+                </div>
+            </form>
         </>
-    )
-}
-
-export default Catalogo 
+    )}
