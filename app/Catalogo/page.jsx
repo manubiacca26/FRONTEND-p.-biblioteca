@@ -1,118 +1,165 @@
-"use client"
+"use client";
+
 import React, { useState } from 'react'
 import Styles from '@/app/Catalogo/catalogo.module.css'
 
 
 
-const Catalogo = (props) => {
-  const [codigo, setCodigo] = useState('')
+export default function Catalogo() {
+  const [Exemplar, setExemplar] = useState('');
   const [autor, setAutor] = useState('')
-  const [titulo, setTitulo] = useState('')
   const [assunto, setAssunto] = useState('')
-  const [numero, setNumero] = useState('')
+  const [nChamada, setNChamada] = useState('')
   const [acervo, setAcervo] = useState('')
   const [ISBN, setISBN] = useState('')
   const [quantidade, setQuantidade] = useState('')
+  const [titulo, setTitulo] = useState('')
+  const [mensagemErro, setMensagemErro] = useState('');
+  const [mensagemSucesso, setMensagemSucesso] = useState('');
+
+  const createAcervo = async (e) => {
+    e.preventDefault();
 
 
-  const onButtonClick = () => {
-    // You'll update this function later...
-  }
+    const requestBody = {
+      Exemplar: Exemplar,
+      Autor: autor,
+      Título: titulo,
+      Assunto: assunto,
+      nChamada: nChamada,
+      Acervo: acervo,
+      ISBN: ISBN,
+      Quantidade: quantidade,
+    
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/registraracervo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+
+        setMensagemSucesso('Catalogo criado com sucesso!');
+        setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
+
+      } else {
+        const errorMessage = `Erro ao criar catalogo, dados inválidos`;
+        setMensagemErro(errorMessage);
+        setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+      }
+    } catch (error) {
+      setMensagemErro('Erro ao criar catalogo: ' + error);
+      setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+    }
+  };
+
 
 
   return (
     <>
+
+      {mensagemSucesso && (
+        <div className={Styles.notificacao}>
+          {mensagemSucesso}
+        </div>
+      )}
+      {mensagemErro && (
+        <div className={Styles.notificacaoErro}>
+          {mensagemErro}
+        </div>
+      )}
       <div className={Styles.inputContainer}>
         <p>
-            Código do exemplar:  
+          Código do exemplar:
         </p>
         <input
-          value={codigo}
-          onChange={(ev) => setCodigo(ev.target.value)}
-          className={Styles.inputBox} required/>
+          value={Exemplar}
+          onChange={(e) => setExemplar(e.target.value)}
+          className={Styles.inputBox} required />
       </div>
       <div className={Styles.inputContainer}>
         <p>
-            Nome do autor:
+          Nome do autor:
         </p>
         <input
           value={autor}
-          onChange={(ev) => setAutor(ev.target.value)}
+          onChange={(e) => setAutor(e.target.value)}
           className={Styles.inputBox} required>
-            
-          </input>
+
+        </input>
       </div>
       <div className={Styles.inputContainer}>
         <p>
-            Título do exemplar:
+          Título do exemplar:
         </p>
         <input
           value={titulo}
-          onChange={(ev) => setTitulo(ev.target.value)}
+          onChange={(e) => setTitulo(e.target.value)}
           className={Styles.inputBox} required>
-          </input>
+        </input>
       </div>
       <div className={Styles.inputContainer}>
         <p>
-            Código do assunto:
+          Código do assunto:
         </p>
         <input
           value={assunto}
-          onChange={(ev) => setAssunto(ev.target.value)}
+          onChange={(e) => setAssunto(e.target.value)}
           className={Styles.inputBox} required>
-          </input>
+        </input>
       </div>
-      
-      <div className={Styles.inputContainer}>
-        <p>
-            Número de chamada:
-        </p>
-        <input
-          value={numero}
-          onChange={(ev) => setNumero(ev.target.value)}
-          className={Styles.inputBox} required>
-          </input>
-          </div>
 
       <div className={Styles.inputContainer}>
         <p>
-            Acervo:
+          Número de chamada:
+        </p>
+        <input
+          value={nChamada}
+          onChange={(e) => setNChamada(e.target.value)}
+          className={Styles.inputBox} required>
+        </input>
+      </div>
+
+      <div className={Styles.inputContainer}>
+        <p>
+          Acervo:
         </p>
         <input
           value={acervo}
-          onChange={(ev) => setAcervo(ev.target.value)}
+          onChange={(e) => setAcervo(e.target.value)}
           className={Styles.inputBox} required>
-          </input>
-          </div>
-          
+        </input>
+      </div>
+
       <div className={Styles.inputContainer}>
         <p>
-            ISBN:
+          ISBN:
         </p>
         <input
           value={ISBN}
-          onChange={(ev) => setISBN(ev.target.value)}
+          onChange={(e) => setISBN(e.target.value)}
           className={Styles.inputBox} required>
-          </input>
-          </div>
-          
+        </input>
+      </div>
+
       <div className={Styles.inputContainer}>
         <p>
-            Quantidade:
+          Quantidade:
         </p>
         <input
           value={quantidade}
-          onChange={(ev) => setQuantidade(ev.target.value)}
+          onChange={(e) => setQuantidade(e.target.value)}
           className={Styles.inputBox} required>
-          </input>
-          </div>
+        </input>
+      </div>
 
       <div className={Styles.inputContainer}>
-        <input className={Styles.inputButton} type="button" onClick={onButtonClick} value={'Registrar'} />
-        </div>
-      
-      </>
+        <input className={Styles.inputButton} type="button" onClick={createAcervo} value={'Registrar'} />
+      </div>
+
+    </>
   )
 }
-
-export default Catalogo
