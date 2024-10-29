@@ -1,17 +1,16 @@
 'use client';  // Especifica que este componente será renderizado no lado do cliente
 
 import { useState } from "react";
-import { useRouter } from 'next/navigation';  // Importa o hook useRouter do Next.js para redirecionamento de página
 import styles from '@/app/CColaborador/colaborador.module.css';
 
 // Função principal que define o componente da página de criação de usuário
 export default function CreateUserPage() {
-  const [telefone, setTelefone] = useState("");
-  const [Dnasc, setDnasc] = useState("");
-  const [CPF, setCPF] = useState("");
+  const [telefone, setTelefone] = useState('');
+  const [Dnasc, setDnasc] = useState('');
+  const [CPF, setCPF] = useState('');
   const [name, setName] = useState('');  // Declara o estado para o nome do usuário, inicialmente vazio
   const [email, setEmail] = useState('');  // Declara o estado para o email do usuário, inicialmente vazio
-  const router = useRouter();  // Instancia o hook useRouter para permitir navegação programática entre páginas
+  
 
   // Função para lidar com a mudança do telefone
   const testetele = (e) => {
@@ -32,7 +31,7 @@ export default function CreateUserPage() {
   const createUser  = async (e) => {
     e.preventDefault();  // Previne o comportamento padrão do formulário (recarregar a página)
 
-    await fetch('http://localhost:3001/registrarusuario', {  // Faz uma requisição POST para o backend com os dados do usuário
+    await fetch('http://localhost:3001/registrarcolaborador', {  // Faz uma requisição POST para o backend com os dados do usuário
       method: 'POST',  // Define o método como POST para criar um novo usuário
       headers: { 'Content-Type': 'application/json' },  // Define o cabeçalho da requisição para enviar dados em JSON
       body: JSON.stringify({ 
@@ -53,7 +52,7 @@ export default function CreateUserPage() {
         <label>Cadastro de Colaborador</label>
       </p>
     
-      <form onSubmit={createUser } className={styles.form}>
+      <form onSubmit={createUser} className={styles.form}>
         <br />
         <label>Nome Completo:</label>
         <input type="text"
@@ -102,20 +101,7 @@ export default function CreateUserPage() {
         />
         <br />
 
-        <label>Tipo de empréstimo:</label>
-        <select className={styles.option}>
-          <option value="Normal">Empréstimo Normal</option>
-          <option value="Especial">Empréstimo Especial</option>
-        </select>
-
-        <br />
-
-        <label>Categoria do usuário:</label>
-        <select className={styles.option}>
-        <option value="Aluno">Aluno</option>
-          <option value="Tercerizado">Tercerizado</option>
-          <option value="Funcionário">Funcionário</option>
-        </select>
+       
 
         <br />
         <div className={styles.inputContainer}>
