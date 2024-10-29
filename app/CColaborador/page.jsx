@@ -29,6 +29,7 @@ export default function CreateUserPage() {
       }),  // Converte o objeto dos dados do usuário para JSON
     });
 
+
     router.push('/users');  // Redireciona para a página de listagem de usuários após a criação bem-sucedida
   };
 
@@ -74,7 +75,7 @@ export default function CreateUserPage() {
           type="email"
           placeholder="Email"
           value={email}  // O valor do campo é controlado pelo estado email
-          onChange={(e) => setEmail(e.target.value)}  // Atualiza o estado email com o valor digitado pelo usuário
+          onChange={(e) => setEmail(e.target.value)} required // Atualiza o estado email com o valor digitado pelo usuário
           className={styles.input}  /* Aplica o estilo de input definido no CSS Module */
         />
         <br></br>
