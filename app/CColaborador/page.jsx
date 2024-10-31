@@ -6,7 +6,7 @@ import styles from '@/app/CColaborador/colaborador.module.css';
 // Função principal que define o componente da página de criação de usuário
 export default function CreateUserPage() {
   const [telefone, setTelefone] = useState('');
-  const [Dnasc, setDnasc] = useState('');
+  const [dataNasc, setDataNasc] = useState('');
   const [cpf, setCPF] = useState('');
   const [nome, setNome] = useState('');  // Declara o estado para o nome do usuário, inicialmente vazio
   const [email, setEmail] = useState('');  // Declara o estado para o email do usuário, inicialmente vazio
@@ -34,6 +34,9 @@ export default function CreateUserPage() {
     e.preventDefault();
 
     try {
+        // Formata a data para o formato desejado
+        const formattedDataNasc = new Date(dataNasc).toISOString().replace('T', ' ').replace('Z', '');
+
         const response = await fetch('http://localhost:3001/registrarcolaborador', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -42,7 +45,7 @@ export default function CreateUserPage() {
                 email,
                 telefone,
                 cpf,
-                Dnasc
+              dataNasc: formattedDataNasc
             }),
         });
 
@@ -109,8 +112,8 @@ export default function CreateUserPage() {
         <input
           className={styles.inputBox}
           type="date"
-          value={Dnasc}
-          onChange={(e) => setDnasc(e.target.value)}
+          value={dataNasc}
+          onChange={(e) => setDataNasc(e.target.value)}
           min="1979-12-31"
           max="2020-01-02"
           required
