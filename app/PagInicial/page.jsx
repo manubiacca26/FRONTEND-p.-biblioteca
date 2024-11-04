@@ -27,7 +27,7 @@ const PagInicialSemCadastro = (props) => {
                     <div className={Style.box}>
 
                         <button className={Style.botao}>
-                        <Link href="./Devolucao">
+                        <Link href="./ConsultarReserva">
                             <Image src="/Consultar.png" alt="Button Image" width={200} height={200} />
                         </Link>
                         </button>
