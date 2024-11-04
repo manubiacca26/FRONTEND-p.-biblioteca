@@ -6,16 +6,19 @@ const Header = () => {
   return (
     <header>
       <div className={Styles.header}>
-        <Image
+        <Link href="./PagInicial">
+        <Image 
           width={200}
           height={100}
           src='/sesi.png'
           alt="SESI" />
+        </Link>
         <div className={Styles.title2}>
           <ul> Serviço Social da Indústria - SÃO PAULO </ul>
           <ul>CE242 - Vinhedo</ul>
         </div>
         <div className={Styles.title}>
+        
 
           <Link
           className={Styles.sino}
