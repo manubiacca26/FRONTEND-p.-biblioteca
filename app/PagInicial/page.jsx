@@ -2,8 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import Style from '@/app/PagInicial/pagInicial.module.css';
 import Link  from 'next/link';
-import HeaderCADASTRO from '../components/HeaderCADASTRO';
-import FooterCADASTRO from '../components/FooterCADASTRO';
+
 
 
 
@@ -23,6 +22,16 @@ const PagInicialSemCadastro = (props) => {
                         </Link>
                         </button>
                         <label>Devolução</label>
+                    </div>
+
+                    <div className={Style.box}>
+
+                        <button className={Style.botao}>
+                        <Link href="./Devolucao">
+                            <Image src="/Consultar.png" alt="Button Image" width={200} height={200} />
+                        </Link>
+                        </button>
+                        <label>Consultar Reserva</label>
                     </div>
 
 
