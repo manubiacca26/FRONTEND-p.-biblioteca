@@ -50,10 +50,10 @@ export default function CreateUserPage() {
         });
 
         if (response.ok) {
-            setMensagemSucesso('Usuário criado com sucesso!');
+            setMensagemSucesso('Colaborador criado com sucesso!');
             setTimeout(() => setMensagemSucesso(''), 3000);
         } else {
-            const errorMessage = `Erro ao criar usuário, dados inválidos`;
+            const errorMessage = `Erro ao criar colaborador, dados inválidos`;
             setMensagemErro(errorMessage);
             setTimeout(() => setMensagemErro(''), 3000);
         }
