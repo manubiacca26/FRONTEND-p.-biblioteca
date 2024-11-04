@@ -1,156 +1,111 @@
-'use client';
+"use client"
 
 import { useState } from "react";
-import Styles from '@/app/ConsultarReserva/page.module.css';
+import Styles from '@/app/SituacaoDoLivro/SituacaoLivro.module.css'
 
-export default function Emprestimo() {
-    const [Exemplar, setExemplar] = useState('');
-    const [reserva, setReserva] = useState(null);
-    const [mensagemSucesso, setMensagemSucesso] = useState('');
-    const [mensagemErro, setMensagemErro] = useState('');
-    const [mensagemErroAluno, setMensagemErroAluno] = useState('');
-    const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
-    const [mensagemErroColaborador, setMensagemErroColaborador] = useState('');
+function Devolucao() {
+  const [Exemplar, setExemplar] = useState('');
+  const [livros, setLivros] = useState(null);
+  const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
 
+  const limparExemplar = () => {
+    setLivros(null); // Corrigido para null ao invés de ''
+    setExemplar('');
+  };
 
+  const buscarExemplar = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/todasreservas/${Exemplar}`);
+      if (response.ok) {
+        const exemplarData = await response.json();
+        setLivros(exemplarData);
+        setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
+      } else {
+        const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
+        setMensagemErroExemplar(errorMessage);
+        setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
+      }
+    } catch (error) {
+      setMensagemErroExemplar('Erro ao buscar Exemplar: ' + error);
+      setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
+    }
+  };
 
-    const buscarExemplar = async () => {
-        try {
-            const response = await fetch(`http://localhost:3001/todasreservas/:Exemplar`);
-            if (response.ok) {
-                const exemplarData = await response.json();
-                setReserva(exemplarData);
-                setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
+  return (
+    <>
+      <form>
 
-            } else {
-                const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
-                setMensagemErroExemplar(errorMessage);
-                setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
-            }
-        } catch (error) {
-            setMensagemErroExemplar('Erro ao buscar Exemplar: ' + error);
-            setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
-        }
-    };
+        {mensagemErroExemplar && (
+          <div className={Styles.notificacaoErro}>
+            {mensagemErroExemplar}
+          </div>
+        )}
 
-    const limparCredenciais = () => {
-        setRM('');
-        setCPF('');
-        setAluno(null);
-        setColaborador(null);
-    };
+        <div className={Styles.divBusca}>
+          <div className={Styles.divInput}>
+            <input
+              className={Styles.inputBox}
+              type="text"
+              placeholder="Exemplar"
+              value={Exemplar}
+              onChange={(e) => setExemplar(e.target.value)} // Atualiza o estado com o valor do input
+            />
+          </div>
+          <button className={Styles.inputButton} type="button" onClick={buscarExemplar}>Buscar</button>
+          <button className={Styles.inputButton} type="button" onClick={limparExemplar}>Limpar</button>
+        </div>
 
-    const limparExemplar = () => {
-        setLivros('');
-        setExemplar('');
-    };
+        <div className={Styles.infoAlunoColabExem}>
+          <div className={Styles.agruparLista}>
+            <h3>Informações sobre o exemplar</h3>
+            <table className={Styles.userTable}>
+              <thead>
+                <tr>
+                  <th>Campo</th>
+                  <th>Credencial</th>
+                </tr>
+              </thead>
+              <tbody>
+                {livros && (
+                  <>
+                    <tr>
+                      <td>Exemplar</td>
+                      <td>{livros.Exemplar}</td>
+                    </tr>
+                    <tr>
+                      <td>Número de Chamada</td>
+                      <td>{livros.RM}</td>
+                    </tr>
+                    <tr>
+                      <td>Assunto</td>
+                      <td>{livros.Assunto}</td>
+                    </tr>
+                    <tr>
+                      <td>ISBN</td>
+                      <td>{livros.ISBN}</td>
+                    </tr>
+                    <tr>
+                      <td>Título</td>
+                      <td>{livros.Título}</td>
+                    </tr>
+                    <tr>
+                      <td>Autor</td>
+                      <td>{livros.Autor}</td>
+                    </tr>
+                    <tr>
+                      <td>Acervo</td>
+                      <td>{livros.Acervo}</td>
+                    </tr>
+                  </>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Impede a ação padrão do Enter
-        }
-    };
-
-    const handleNumericInput = (e, setValue) => {
-        const value = e.target.value;
-        // Filtra apenas números
-        const numericValue = value.replace(/[^0-9]/g, '');
-        setValue(numericValue);
-    };
-
-
-    return (
-        <form onKeyDown={handleKeyDown}>
-            {mensagemSucesso && (
-                <div className={Styles.notificacao}>
-                    {mensagemSucesso}
-                </div>
-            )}
-            {mensagemErro && (
-                <div className={Styles.notificacaoErro}>
-                    {mensagemErro}
-                </div>
-            )}
-            {mensagemErroAluno && (
-                <div className={Styles.notificacaoErro}>
-                    {mensagemErroAluno}
-                </div>
-            )}
-            {mensagemErroExemplar && (
-                <div className={Styles.notificacaoErro}>
-                    {mensagemErroExemplar}
-                </div>
-            )}
-            {mensagemErroColaborador && (
-                <div className={Styles.notificacaoErro}>
-                    {mensagemErroColaborador}
-                </div>
-            )}
-           
-          
-            <div className={Styles.divBusca}>
-                <div className={Styles.divInput}>
-                    <input
-                        className={Styles.inputBox}
-                        type="text"
-                        placeholder="Exemplar"
-                        value={Exemplar}
-                        onChange={(e) => setExemplar(e.target.value)}
-                    />
-                </div>
-                <button className={Styles.inputButton} type="button" onClick={() => { buscarExemplar() }}>Buscar</button>
-                <button className={Styles.inputButton} type="button" onClick={limparExemplar}>Limpar</button>
-            </div>
-
-            <div className={Styles.infoAlunoColabExem}>
-                <div className={Styles.agruparLista}>
-                    <h3>Informações sobre a reserva</h3>
-                    <table className={Styles.userTable}>
-                        <thead>
-                            <tr>
-                                <th>Campo</th>
-                                <th>Credencial</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {reserva && (
-                                <>
-                                    <tr>
-                                        <td>Exemplar</td>
-                                        <td>{reserva.Exemplar}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Número de Chamada</td>
-                                        <td>{reserva.nChamada}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Assunto</td>
-                                        <td>{reserva.Assunto}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ISBN</td>
-                                        <td>{reserva.ISBN}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Título</td>
-                                        <td>{reserva.Título}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Autor</td>
-                                        <td>{reserva.Autor}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Acervo</td>
-                                        <td>{reserva.Acervo}</td>
-                                    </tr>
-                                </>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-        </form>
-    );
+      </form>
+    </>
+  )
 }
+
+export default Devolucao;
