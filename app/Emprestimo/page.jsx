@@ -99,7 +99,7 @@ export default function Emprestimo() {
             // Atualizar apenas o campo Situacao
             const updatedData = {
                 ...exemplarData,
-                Situacao: situacao,
+                Situacao: 'Emprestado',
                 // Inclua outros campos que você deseja preservar
             };
 
