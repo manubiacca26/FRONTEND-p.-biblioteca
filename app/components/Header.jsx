@@ -3,31 +3,46 @@ import Styles from '@/app/page.module.css'
 import Link from "next/link";
 
 const Header = () => {
-    return (
-      <header>
-          <div className={Styles.header}> 
-        <Image 
-        width={200}
-        height={100}
-        src='/sesi.png'
-        alt="SESI" />
+  return (
+    <header>
+      <div className={Styles.header}>
+        <Image
+          width={200}
+          height={100}
+          src='/sesi.png'
+          alt="SESI" />
         <div className={Styles.title2}>
-        <ul> Serviço Social da Indústria - SÃO PAULO </ul>
-        <ul>CE242 - Vinhedo</ul>
+          <ul> Serviço Social da Indústria - SÃO PAULO </ul>
+          <ul>CE242 - Vinhedo</ul>
         </div>
         <div className={Styles.title}>
-        <p> BEM VINDO(A) </p>
-        </div> 
+
+          <Link
+          className={Styles.sino}
+           href="./Notificacao">
+        
+            <Image
+              
+              width={20}
+              height={20}
+              src='/sino.png'
+              alt="Notificacao" />
+
+          </Link>
+
+
+          <p> BEM VINDO(A) </p>
         </div>
-        <div className={Styles.naav}>
+      </div>
+      <div className={Styles.naav}>
 
         <div>
         </div>
-        </div>
-          
-          </header>
+      </div>
 
-    );
-  };
-  
-  export default Header;
+    </header>
+
+  );
+};
+
+export default Header;
