@@ -162,7 +162,7 @@ function Devolucao() {
                             type="text"
                             placeholder="Exemplar"
                             value={Exemplar}
-                            onChange={(e) => handleNumericInput(e, setExemplar)}
+                            onChange={(e) => setExemplar(e.target.value)}
                             required
                         />
                     </label>
