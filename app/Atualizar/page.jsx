@@ -182,7 +182,7 @@ export default function Catalogo() {
                 </div>
     
                 <div className={Styles.inputContainer}>
-                    <input className={Styles.inputButton} type="button" value={'Registrar'} onClick={registrarExemplar} />
+                    <input className={Styles.inputButton} type="button" value={'Atualizar'} onClick={registrarExemplar} />
                 </div>
             </form>
         </>
