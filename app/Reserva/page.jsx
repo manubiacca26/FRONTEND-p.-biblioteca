@@ -1,34 +1,36 @@
-'use client';
+'use client'; // Indica que este componente será renderizado no lado do cliente
 
-import { useState, useEffect } from "react";
-import Styles from '@/app/Emprestimo/page.module.css';
+import { useState, useEffect } from "react"; // Importa hooks do React
+import Styles from '@/app/Emprestimo/page.module.css'; // Importa os estilos CSS
+import Link from "next/link"; // Importa o componente Link do Next.js para navegação
+import Image from "next/image";
 
 export default function Emprestimo() {
-    const [Exemplar, setExemplar] = useState('');
-    const [RM, setRM] = useState('');
-    const [aluno, setAluno] = useState(null);
-    const [livros, setLivros] = useState(null);
-    const [mensagemSucesso, setMensagemSucesso] = useState('');
-    const [mensagemErro, setMensagemErro] = useState('');
-    const [mensagemErroAluno, setMensagemErroAluno] = useState('');
-    const [mensagemErroExemplar, setMensagemErroExemplar] = useState('')
+    // Declaração dos estados usando useState
+    const [Exemplar, setExemplar] = useState(''); // Estado para armazenar o exemplar
+    const [RM, setRM] = useState(''); // Estado para armazenar o RM do aluno
+    const [aluno, setAluno] = useState(null); // Estado para armazenar os dados do aluno
+    const [livros, setLivros] = useState(null); // Estado para armazenar os dados do exemplar
+    const [mensagemSucesso, setMensagemSucesso] = useState(''); // Estado para mensagens de sucesso
+    const [mensagemErro, setMensagemErro] = useState(''); // Estado para mensagens de erro
+    const [mensagemErroAluno, setMensagemErroAluno] = useState(''); // Estado para mensagens de erro do aluno
+    const [mensagemErroExemplar, setMensagemErroExemplar] = useState(''); // Estado para mensagens de erro do exemplar
 
-    
-
+    // Função para formatar a data no formato brasileiro
     const formatarData = (data) => {
         const dataObj = new Date(data);
         dataObj.setDate(dataObj.getDate() + 1); // Adiciona um dia
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        return dataObj.toLocaleDateString('pt-BR', options);
+        return dataObj.toLocaleDateString('pt-BR', options); // Retorna a data formatada
     };
 
-
+    // Função para criar uma reserva
     const createReserva = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Impede o comportamento padrão do formulário
 
-        // Verifique se o exemplar está emprestado
+        // Verifica se o exemplar está emprestado
         if (livros && livros.Situacao === 'Emprestado') {
-            // Atualizar a coluna Reserva para 'Reservado'
+            // Atualiza a coluna Reserva para 'Reservado'
             const requestBody = {
                 Exemplar: Exemplar,
                 RM: RM || null,
@@ -39,105 +41,100 @@ export default function Emprestimo() {
                 const response = await fetch('http://localhost:3001/reservar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestBody),
+                    body: JSON.stringify(requestBody), // Envia os dados da reserva
                 });
 
                 if (response.ok) {
-                  
-                    // Atualizar o estado local para refletir a nova situação
+                    // Atualiza o estado local para refletir a nova situação
                     setLivros(prevLivros => ({
                         ...prevLivros,
-                        Situacao: 'Emprestado'
+                        Situacao: 'Emprestado' // Atualiza a situação para 'Emprestado'
                     }));
 
-                    setMensagemSucesso('Reserva criada com sucesso!');
+                    setMensagemSucesso('Reserva criada com sucesso!'); // Mensagem de sucesso
                     setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
-
                 } else {
-                    const errorMessage = `Erro ao criar reserva, dados inválidos`;
+                    const errorMessage = `Erro ao criar reserva, dados inválidos`; // Mensagem de erro
                     setMensagemErro(errorMessage);
                     setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
                 }
             } catch (error) {
-                setMensagemErro('Erro ao criar reserva: ' + error);
+                setMensagemErro('Erro ao criar reserva: ' + error); // Captura e exibe erro
                 setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
             return; // Impede a criação do empréstimo
         }
 
-        // Se não estiver emprestado, mostrar mensagem de erro
+        // Se não estiver emprestado, mostra mensagem de erro
         setMensagemErro('O exemplar não está emprestado. Não é possível criar a reserva.');
         setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
     };
 
-
-
+    // Função para buscar os dados do aluno
     const buscarAluno = async () => {
-
         try {
             const response = await fetch(`http://localhost:3001/alunos/${RM}`);
             if (response.ok) {
-                const alunoData = await response.json();
-                setAluno(alunoData);
+                const alunoData = await response.json(); // Obtém os dados do aluno
+                setAluno(alunoData); // Atualiza o estado do aluno
                 setMensagemErroAluno(''); // Limpa a mensagem de erro, se houver
             } else {
-                const errorMessage = `Erro ao buscar aluno: ${response.status}`;
+                const errorMessage = `Erro ao buscar aluno: ${response.status}`; // Mensagem de erro
                 setMensagemErroAluno(errorMessage);
-                setTimeout(() => setMensagemErroAluno(''), 3000); // Limpa a mensagem de erro após 3 segundos
+                setTimeout (() => setMensagemErroAluno(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
         } catch (error) {
-            setMensagemErroAluno('Erro ao buscar aluno: ' + error);
+            setMensagemErroAluno('Erro ao buscar aluno: ' + error); // Captura e exibe erro
             setTimeout(() => setMensagemErroAluno(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
-
     };
 
-
+    // Função para buscar os dados do exemplar
     const buscarExemplar = async () => {
         try {
             const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
             if (response.ok) {
-                const exemplarData = await response.json();
-                setLivros(exemplarData);
+                const exemplarData = await response.json(); // Obtém os dados do exemplar
+                setLivros(exemplarData); // Atualiza o estado do exemplar
                 setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
-
-               
             } else {
-                const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
+                const errorMessage = `Erro ao buscar Exemplar: ${response.status}`; // Mensagem de erro
                 setMensagemErroExemplar(errorMessage);
                 setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
         } catch (error) {
-            setMensagemErroExemplar('Erro ao buscar Exemplar: ' + error);
+            setMensagemErroExemplar('Erro ao buscar Exemplar: ' + error); // Captura e exibe erro
             setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
 
+    // Função para limpar as credenciais do aluno
     const limparCredenciais = () => {
         setRM('');
         setAluno(null);
-
     };
 
+    // Função para limpar as informações do exemplar
     const limparExemplar = () => {
         setLivros('');
         setExemplar('');
     };
 
+    // Função para lidar com a tecla Enter
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault(); // Impede a ação padrão do Enter
         }
     };
 
+    // Função para lidar com a entrada de dados numéricos
     const handleNumericInput = (e, setValue) => {
         const value = e.target.value;
-        // Filtra apenas números
-        const numericValue = value.replace(/[^0-9]/g, '');
+        const numericValue = value.replace(/[^0-9]/g, ''); // Filtra apenas números
         setValue(numericValue);
     };
 
-
+    // Renderização do componente
     return (
         <form onKeyDown={handleKeyDown}>
             {mensagemSucesso && (
@@ -160,6 +157,16 @@ export default function Emprestimo() {
                     {mensagemErroExemplar}
                 </div>
             )}
+            <div className={Styles.retornar}>
+                <Link href="/PagInicial">
+                    <Image
+                        width={50}
+                        height={50}
+                        src='/retornar.png'
+                        alt="Retornar"
+                    />
+                </Link>
+            </div>
 
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
@@ -204,7 +211,7 @@ export default function Emprestimo() {
                                     </tr>
                                     <tr>
                                         <td>Data Nascimento</td>
-                                        <td>{formatarData(aluno.Data_Nascimento)}</td>
+                                        <td>{formatarData(aluno.Data_Nascimento)}</td >
                                     </tr>
                                 </>
                             )}
@@ -274,7 +281,6 @@ export default function Emprestimo() {
                     </table>
                 </div>
             </div>
-
 
             <div className={Styles.divCreate}>
                 <button className={Styles.inputButton} onClick={createReserva} type="submit">Reservar</button>

@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Styles from '@/app/Emprestimo/page.module.css';
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Emprestimo() {
     const [Exemplar, setExemplar] = useState('');
@@ -84,7 +86,6 @@ export default function Emprestimo() {
         }
     };
 
-
     // Função para atualizar a situação do exemplar
     const atualizarSituacaoExemplar = async (situacao) => {
         try {
@@ -104,7 +105,7 @@ export default function Emprestimo() {
             };
 
             // Enviar a atualização para o servidor
-            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
+            const updateResponse = await fetch(`http://localhost:300 1/atualizaracervo/${Exemplar}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedData),
@@ -120,7 +121,6 @@ export default function Emprestimo() {
             setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
-
 
     const isRMDisabled = RM.length > 0;
     const isCPFDisabled = CPF.length > 0;
@@ -213,10 +213,9 @@ export default function Emprestimo() {
     const handleNumericInput = (e, setValue) => {
         const value = e.target.value;
         // Filtra apenas números
-        const numericValue = value.replace(/[^0-9]/g, '');
+ const numericValue = value.replace(/[^0-9]/g, '');
         setValue(numericValue);
     };
-
 
     return (
         <form onKeyDown={handleKeyDown}>
@@ -245,6 +244,18 @@ export default function Emprestimo() {
                     {mensagemErroColaborador}
                 </div>
             )}
+
+            <div className={Styles.retornar}>
+                <Link href="/PagInicial">
+                    <Image
+                        width={50}
+                        height={50}
+                        src='/retornar.png'
+                        alt="Retornar"
+                    />
+                </Link>
+            </div>
+
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
                     <input
@@ -352,7 +363,7 @@ export default function Emprestimo() {
                 <div className={Styles.agruparLista}>
                     <h3>Informações sobre o exemplar</h3>
                     <table className={Styles.userTable}>
-                        <thead>
+                        <thead >
                             <tr>
                                 <th>Campo</th>
                                 <th>Credencial</th>
@@ -397,7 +408,6 @@ export default function Emprestimo() {
             </div>
 
             <div className={Styles.divDate}>
-
                 <input
                     className={Styles.inputBox}
                     type="date"
@@ -405,9 +415,7 @@ export default function Emprestimo() {
                     onChange={(e) => setDataEmprestimo(e.target.value)}
                     required
                 />
-
             </div>
-
 
             <div className={Styles.divCreate}>
                 <button className={Styles.inputButton} onClick={createEmprestimo} type="submit">Criar Empréstimo</button>
