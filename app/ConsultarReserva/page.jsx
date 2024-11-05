@@ -48,16 +48,11 @@ export default function Emprestimo() {
         }
     };
 
-    const limparCredenciais = () => {
-        setRM('');
-        setCPF('');
-        setAluno(null);
-        setColaborador(null);
-    };
+
 
     const limparExemplar = () => {
-        setLivros('');
         setExemplar('');
+        setReserva('')
     };
 
     const handleKeyDown = (event) => {
@@ -135,6 +130,10 @@ export default function Emprestimo() {
                                         <td>{reserva.Exemplar}</td>
                                     </tr>
                                     <tr>
+                                        <td>RM do Aluno</td>
+                                        <td>{reserva.RM}</td>
+                                    </tr>
+                                    {/* <tr>
                                         <td>Número de Chamada</td>
                                         <td>{reserva.nChamada}</td>
                                     </tr>
@@ -157,7 +156,7 @@ export default function Emprestimo() {
                                     <tr>
                                         <td>Acervo</td>
                                         <td>{reserva.acervo ? reserva.acervo.Acervo : 'Não encontrado'}</td>
-                                    </tr>
+                                    </tr> */}
                                 </>
                             )}
                         </tbody>
