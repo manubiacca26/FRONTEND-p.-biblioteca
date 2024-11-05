@@ -77,6 +77,7 @@ export default function Catalogo() {
         }
     };
 
+
     return (
         <>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -85,13 +86,13 @@ export default function Catalogo() {
                         {mensagemSucesso}
                     </div>
                 )}
-    
+
                 {mensagemErroExemplar && (
                     <div className={Styles.notificacaoErro}>
                         {mensagemErroExemplar}
                     </div>
                 )}
-    
+
                 <div className={Styles.div1}>
                     <label className={Styles.form}>
                         <input
@@ -105,7 +106,7 @@ export default function Catalogo() {
                     <button onClick={buscarExemplar} type="button">Buscar</button>
                     <button onClick={() => setExemplar('')} type="button">Limpar</button>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Nome do autor:
@@ -136,7 +137,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Número de chamada:
@@ -147,7 +148,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Acervo:
@@ -158,7 +159,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         ISBN:
@@ -169,7 +170,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Quantidade:
@@ -180,10 +181,11 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <input className={Styles.inputButton} type="button" value={'Registrar'} onClick={registrarExemplar} />
                 </div>
             </form>
         </>
-    )}
+    )
+}
