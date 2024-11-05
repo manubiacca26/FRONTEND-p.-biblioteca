@@ -16,14 +16,29 @@ export default function Emprestimo() {
 
     const buscarExemplar = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/todasreservas/:Exemplar`);
-            if (response.ok) {
-                const exemplarData = await response.json();
-                setReserva(exemplarData);
-                setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
+            // Primeiro, busque a reserva com base no exemplar
+            const reservaResponse = await fetch(`http://localhost:3001/todasreservas/${Exemplar}`);
 
+            if (reservaResponse.ok) {
+                const reservaData = await reservaResponse.json();
+                setReserva(reservaData); // Armazena as informações da reserva
+
+                // Agora, com a informação do exemplar, busque as informações do acervo
+                const acervoResponse = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+                if (acervoResponse.ok) {
+                    const acervoData = await acervoResponse.json();
+                    // Supondo que você queira combinar as informações da reserva e do acervo
+                    const combinedData = { ...reservaData, acervo: acervoData };
+                    setReserva(combinedData); // Armazena as informações combinadas
+                } else {
+                    const errorMessage = `Erro ao buscar Acervo: ${acervoResponse.status}`;
+                    setMensagemErroExemplar(errorMessage);
+                    setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
+                }
+
+                setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
             } else {
-                const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
+                const errorMessage = `Erro ao buscar Reserva: ${reservaResponse.status}`;
                 setMensagemErroExemplar(errorMessage);
                 setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
             }
@@ -86,8 +101,8 @@ export default function Emprestimo() {
                     {mensagemErroColaborador}
                 </div>
             )}
-           
-          
+
+
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
                     <input
@@ -141,7 +156,7 @@ export default function Emprestimo() {
                                     </tr>
                                     <tr>
                                         <td>Acervo</td>
-                                        <td>{reserva.Acervo}</td>
+                                        <td>{reserva.acervo ? reserva.acervo.Acervo : 'Não encontrado'}</td>
                                     </tr>
                                 </>
                             )}
