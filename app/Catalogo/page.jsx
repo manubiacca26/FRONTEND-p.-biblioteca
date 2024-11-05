@@ -20,42 +20,40 @@ export default function Catalogo() {
   const createAcervo = async (e) => {
     e.preventDefault();
 
-
     const requestBody = {
-      Exemplar: Exemplar,
-      Autor: autor,
-      Título: titulo,
-      Assunto: assunto,
-      nChamada: nChamada,
-      Acervo: acervo,
-      ISBN: ISBN,
-      Quantidade: quantidade,
-    
+        Exemplar: Exemplar,
+        Autor: autor,
+        Título: titulo,
+        Assunto: assunto,
+        nChamada: nChamada,
+        Acervo: acervo,
+        ISBN: ISBN,
+        Quantidade: quantidade,
     };
 
     try {
-      const response = await fetch('http://localhost:3001/registraracervo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-      });
+        const response = await fetch('http://localhost:3001/registraracervo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+        });
 
-      if (response.ok) {
+        if (response.ok) {
+            setMensagemSucesso('Catálogo criado com sucesso!');
+            setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
 
-        setMensagemSucesso('Catalogo criado com sucesso!');
-        setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
-
-      } else {
-        const errorMessage = `Erro ao criar catalogo, dados inválidos`;
-        setMensagemErro(errorMessage);
-        setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
-      }
+            // Recarregar a página imediatamente após o sucesso
+            location.reload(); // Recarrega a página
+        } else {
+            const errorMessage = `Erro ao criar catálogo, dados inválidos`;
+            setMensagemErro(errorMessage);
+            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+        }
     } catch (error) {
-      setMensagemErro('Erro ao criar catalogo: ' + error);
-      setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+        setMensagemErro('Erro ao criar catálogo: ' + error);
+        setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
     }
-  };
-
+};
 
 
   return (
@@ -159,7 +157,6 @@ export default function Catalogo() {
       <div className={Styles.inputContainer}>
         <input className={Styles.inputButton} type="button" onClick={createAcervo} value={'Registrar'} />
       </div>
-
     </>
   )
 }

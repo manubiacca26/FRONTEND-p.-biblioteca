@@ -409,6 +409,7 @@ export default function Emprestimo() {
 
             <div className={Styles.divCreate}>
                 <button className={Styles.inputButton} onClick={createEmprestimo} type="submit">Criar Empréstimo</button>
+                
             </div>
 
         </form>
