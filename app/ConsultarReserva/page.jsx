@@ -135,6 +135,10 @@ export default function Emprestimo() {
                                         <td>{reserva.Exemplar}</td>
                                     </tr>
                                     <tr>
+                                        <td>RM do Aluno</td>
+                                        <td>{reserva.RM}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Número de Chamada</td>
                                         <td>{reserva.nChamada}</td>
                                     </tr>
