@@ -69,13 +69,17 @@ export default function Catalogo() {
                 setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
             } else {
                 setMensagemSucesso('Exemplar atualizado com sucesso!');
-                setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem de sucesso após 3 segundos
+                setTimeout(() => {
+                    setMensagemSucesso(''); // Limpa a mensagem de sucesso
+                    window.location.reload(); // Recarrega a página
+                }, 2000); // Espera 2 segundos antes de recarregar
             }
         } catch (error) {
             setMensagemErroExemplar('Erro ao atualizar a situação do exemplar: ' + error);
             setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
+
 
     return (
         <>
@@ -85,13 +89,13 @@ export default function Catalogo() {
                         {mensagemSucesso}
                     </div>
                 )}
-    
+
                 {mensagemErroExemplar && (
                     <div className={Styles.notificacaoErro}>
                         {mensagemErroExemplar}
                     </div>
                 )}
-    
+
                 <div className={Styles.div1}>
                     <label className={Styles.form}>
                         <input
@@ -105,7 +109,7 @@ export default function Catalogo() {
                     <button onClick={buscarExemplar} type="button">Buscar</button>
                     <button onClick={() => setExemplar('')} type="button">Limpar</button>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Nome do autor:
@@ -136,7 +140,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Número de chamada:
@@ -147,7 +151,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Acervo:
@@ -158,7 +162,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         ISBN:
@@ -169,7 +173,7 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <p>
                         Quantidade:
@@ -180,10 +184,11 @@ export default function Catalogo() {
                         className={Styles.inputBox} required>
                     </input>
                 </div>
-    
+
                 <div className={Styles.inputContainer}>
                     <input className={Styles.inputButton} type="button" value={'Registrar'} onClick={registrarExemplar} />
                 </div>
             </form>
         </>
-    )}
+    )
+}

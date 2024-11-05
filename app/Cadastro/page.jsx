@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react";
@@ -47,7 +48,6 @@ const CADASTRO = () => {
                 />
 
 
-
                 <br />
                 <label>Confirmar email:</label>
                 <input type="text"
@@ -84,7 +84,6 @@ const CADASTRO = () => {
                     required
                 />
 
-
                 <br />
 
                 <label>Confirmar Senha:</label>
@@ -95,7 +94,6 @@ const CADASTRO = () => {
                     onChange={(e) => setCsenha(e.target.value)}
 
                 />
-
 
                 <br />
 
