@@ -345,7 +345,7 @@ export default function Emprestimo() {
                         type="text"
                         placeholder="Exemplar"
                         value={Exemplar}
-                        onChange={(e) => handleNumericInput(e, setExemplar)}
+                        onChange={(e) => setExemplar(e.target.value)}
                     />
                 </div>
                 <button className={Styles.inputButton} type="button" onClick={() => { buscarExemplar() }}>Buscar</button>
