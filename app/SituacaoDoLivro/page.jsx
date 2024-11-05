@@ -20,13 +20,6 @@ function Devolucao() {
         const exemplarData = await response.json();
         setLivros(exemplarData);
         setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
-
-        // Verifica se o exemplar está emprestado
-        if (exemplarData.Situacao === 'Emprestado') {
-          setMensagemErroExemplar('O exemplar já está emprestado.');
-          setTimeout(() => setMensagemErroExemplar(''), 3000);
-          setLivros(null); // Limpa os dados do exemplar
-        }
       } else {
         const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
         setMensagemErroExemplar(errorMessage);
@@ -105,7 +98,7 @@ function Devolucao() {
                     </tr>
                     <tr>
                       <td>Situação</td>
-                      <td>{livros.situacao}</td>
+                      <td>{livros.Situacao}</td>
                     </tr>
                   </>
                 )}
