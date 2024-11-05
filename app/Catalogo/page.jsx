@@ -40,10 +40,11 @@ export default function Catalogo() {
 
         if (response.ok) {
             setMensagemSucesso('Catálogo criado com sucesso!');
-            setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
+            setTimeout(() => {
+              setMensagemSucesso(''); // Limpa a mensagem de sucesso
+              window.location.reload(); // Recarrega a página
+          }, 2000); 
 
-            // Recarregar a página imediatamente após o sucesso
-            location.reload(); // Recarrega a página
         } else {
             const errorMessage = `Erro ao criar catálogo, dados inválidos`;
             setMensagemErro(errorMessage);

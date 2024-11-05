@@ -72,7 +72,10 @@ export default function Emprestimo() {
                 }));
 
                 setMensagemSucesso('Empréstimo criado com sucesso!');
-                setTimeout(() => setMensagemSucesso(''), 3000); // Limpa a mensagem após 3 segundos
+                setTimeout(() => {
+                    setMensagemSucesso(''); // Limpa a mensagem de sucesso
+                    window.location.reload(); // Recarrega a página
+                  }, 3000); // Espera 3 segundos antes de recarregar
 
             } else {
                 const errorMessage = `Erro ao criar empréstimo, dados inválidos`;

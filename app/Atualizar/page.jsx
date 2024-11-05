@@ -72,7 +72,7 @@ export default function Catalogo() {
                 setTimeout(() => {
                     setMensagemSucesso(''); // Limpa a mensagem de sucesso
                     window.location.reload(); // Recarrega a página
-                }, 3000); // Espera 3 segundos antes de recarregar
+                }, 2000); // Espera 2 segundos antes de recarregar
             }
         } catch (error) {
             setMensagemErroExemplar('Erro ao atualizar a situação do exemplar: ' + error);

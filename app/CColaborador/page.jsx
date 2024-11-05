@@ -13,7 +13,6 @@ export default function CreateUserPage() {
   const [mensagemErro, setMensagemErro] = useState('');
   const [mensagemSucesso, setMensagemSucesso] = useState('');
 
-
   // Função para lidar com a mudança do telefone
   const testetele = (e) => {
     const value = e.target.value;
@@ -25,7 +24,7 @@ export default function CreateUserPage() {
   const testecpf = (e) => {
     const value = e.target.value;
     if (value.length < 15) {
-      setCPF(value)
+      setCPF(value);
     }
   };
 
@@ -34,35 +33,37 @@ export default function CreateUserPage() {
     e.preventDefault();
 
     try {
-        // Formata a data para o formato desejado
-        const formattedDataNasc = new Date(dataNasc).toISOString().replace('T', ' ').replace('Z', '');
+      // Formata a data para o formato desejado
+      const formattedDataNasc = new Date(dataNasc).toISOString().replace('T', ' ').replace('Z', '');
 
-        const response = await fetch('http://localhost:3001/registrarcolaborador', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                nome,
-                email,
-                telefone,
-                cpf,
-              dataNasc: formattedDataNasc
-            }),
-        });
+      const response = await fetch('http://localhost:3001/registrarcolaborador', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome,
+          email,
+          telefone,
+          cpf,
+          dataNasc: formattedDataNasc
+        }),
+      });
 
-        if (response.ok) {
-            setMensagemSucesso('Colaborador criado com sucesso!');
-            setTimeout(() => setMensagemSucesso(''), 3000);
-        } else {
-            const errorMessage = `Erro ao criar colaborador, dados inválidos`;
-            setMensagemErro(errorMessage);
-            setTimeout(() => setMensagemErro(''), 3000);
-        }
-    } catch (error) {
-        setMensagemErro('Erro ao criar usuário: ' + error);
+      if (response.ok) {
+        setMensagemSucesso('Colaborador criado com sucesso!');
+        setTimeout(() => {
+          setMensagemSucesso(''); // Limpa a mensagem de sucesso
+          window.location.reload(); // Recarrega a página
+        }, 2000); // Espera 2 segundos antes de recarregar
+      } else {
+        const errorMessage = `Erro ao criar colaborador, dados inválidos`;
+        setMensagemErro(errorMessage);
         setTimeout(() => setMensagemErro(''), 3000);
+      }
+    } catch (error) {
+      setMensagemErro('Erro ao criar usuário: ' + error);
+      setTimeout(() => setMensagemErro(''), 3000);
     }
-};
-
+  };
 
   return (
     <>
@@ -70,7 +71,7 @@ export default function CreateUserPage() {
         <label>Cadastro de Colaborador</label>
       </p>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={createUser }>
         {mensagemSucesso && (
           <div className={styles.notificacao}>
             {mensagemSucesso}
