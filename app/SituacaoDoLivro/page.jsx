@@ -103,6 +103,10 @@ function Devolucao() {
                       <td>Acervo</td>
                       <td>{livros.Acervo}</td>
                     </tr>
+                    <tr>
+                      <td>Situação</td>
+                      <td>{livros.situacao}</td>
+                    </tr>
                   </>
                 )}
               </tbody>
