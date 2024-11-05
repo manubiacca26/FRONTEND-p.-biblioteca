@@ -27,8 +27,13 @@ export default function Emprestimo() {
     
             if (reservaResponse.ok) {
                 const reservaData = await reservaResponse.json();
-                setReserva(reservaData); // Armazena as informações da reserva
-                setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
+                if (reservaData) { // Verifica se a reservaData não está vazia
+                    setReserva(reservaData); // Armazena as informações da reserva
+                    setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
+                } else {
+                    setMensagemErroExemplar('Exemplar não encontrado.');
+                    setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
+                }
             } else {
                 const errorMessage = `Erro ao buscar Reserva: ${reservaResponse.status}`;
                 setMensagemErroExemplar(errorMessage);
