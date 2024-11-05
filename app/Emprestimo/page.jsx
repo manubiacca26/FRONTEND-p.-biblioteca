@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Styles from '@/app/Emprestimo/page.module.css';
 
+
 export default function Emprestimo() {
     const [Exemplar, setExemplar] = useState('');
     const [dataEmprestimo, setDataEmprestimo] = useState('');
@@ -84,9 +85,8 @@ export default function Emprestimo() {
         }
     };
 
-
     // Função para atualizar a situação do exemplar
-    const atualizarSituacaoExemplar = async (situacao) => {
+    const atualizarSituacaoExemplar = async () => {
         try {
             // Buscar o exemplar atual
             const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
@@ -99,7 +99,7 @@ export default function Emprestimo() {
             // Atualizar apenas o campo Situacao
             const updatedData = {
                 ...exemplarData,
-                Situacao: situacao,
+                Situacao: 'Emprestado',
                 // Inclua outros campos que você deseja preservar
             };
 
@@ -120,7 +120,6 @@ export default function Emprestimo() {
             setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
         }
     };
-
 
     const isRMDisabled = RM.length > 0;
     const isCPFDisabled = CPF.length > 0;
@@ -213,10 +212,9 @@ export default function Emprestimo() {
     const handleNumericInput = (e, setValue) => {
         const value = e.target.value;
         // Filtra apenas números
-        const numericValue = value.replace(/[^0-9]/g, '');
+ const numericValue = value.replace(/[^0-9]/g, '');
         setValue(numericValue);
     };
-
 
     return (
         <form onKeyDown={handleKeyDown}>
@@ -245,6 +243,9 @@ export default function Emprestimo() {
                     {mensagemErroColaborador}
                 </div>
             )}
+
+    
+
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
                     <input
@@ -341,7 +342,7 @@ export default function Emprestimo() {
                         type="text"
                         placeholder="Exemplar"
                         value={Exemplar}
-                        onChange={(e) => setExemplar(e.target.value)}
+                        onChange={(e) => handleNumericInput(e, setExemplar)}
                     />
                 </div>
                 <button className={Styles.inputButton} type="button" onClick={() => { buscarExemplar() }}>Buscar</button>
@@ -352,7 +353,7 @@ export default function Emprestimo() {
                 <div className={Styles.agruparLista}>
                     <h3>Informações sobre o exemplar</h3>
                     <table className={Styles.userTable}>
-                        <thead>
+                        <thead >
                             <tr>
                                 <th>Campo</th>
                                 <th>Credencial</th>
@@ -397,7 +398,6 @@ export default function Emprestimo() {
             </div>
 
             <div className={Styles.divDate}>
-
                 <input
                     className={Styles.inputBox}
                     type="date"
@@ -405,12 +405,11 @@ export default function Emprestimo() {
                     onChange={(e) => setDataEmprestimo(e.target.value)}
                     required
                 />
-
             </div>
-
 
             <div className={Styles.divCreate}>
                 <button className={Styles.inputButton} onClick={createEmprestimo} type="submit">Criar Empréstimo</button>
+                
             </div>
 
         </form>
