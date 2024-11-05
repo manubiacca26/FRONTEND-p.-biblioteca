@@ -43,7 +43,7 @@ export default function Catalogo() {
             setTimeout(() => {
               setMensagemSucesso(''); // Limpa a mensagem de sucesso
               window.location.reload(); // Recarrega a página
-          }, 2000); 
+          }, 3000); 
 
         } else {
             const errorMessage = `Erro ao criar catálogo, dados inválidos`;
