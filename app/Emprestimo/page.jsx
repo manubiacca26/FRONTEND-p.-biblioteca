@@ -250,7 +250,9 @@ export default function Emprestimo() {
     
 
             <div className={Styles.divBusca}>
+                
                 <div className={Styles.divInput}>
+                    <h3>Busca por credencial</h3>
                     <input
                         className={Styles.inputBox}
                         type="text"
@@ -340,6 +342,7 @@ export default function Emprestimo() {
 
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
+                <h3>Busca por exemplar</h3>
                     <input
                         className={Styles.inputBox}
                         type="text"
