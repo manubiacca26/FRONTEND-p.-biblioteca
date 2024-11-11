@@ -20,11 +20,11 @@ export default function Emprestimo() {
             setTimeout(() => setMensagemErroExemplar(''), 3000); // Limpa a mensagem de erro após 3 segundos
             return; // Retorna para não prosseguir com a requisição
         }
-    
+
         try {
             // Primeiro, busque a reserva com base no exemplar
             const reservaResponse = await fetch(`http://localhost:3001/todasreservas/${Exemplar}`);
-    
+
             if (reservaResponse.ok) {
                 const reservaData = await reservaResponse.json();
                 if (reservaData) { // Verifica se a reservaData não está vazia
@@ -97,6 +97,10 @@ export default function Emprestimo() {
 
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
+
+                    <h3>Busque um exemplar para consultar uma reserva</h3>
+
+
                     <input
                         className={Styles.inputBox}
                         type="text"

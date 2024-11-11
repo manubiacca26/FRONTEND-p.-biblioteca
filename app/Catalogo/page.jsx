@@ -105,7 +105,11 @@ export default function Catalogo() {
           {mensagemErro}
         </div>
       )}
+
+     <h3 className={Styles.h3}>Catalogar um novo exemplar</h3>
+
       <div className={Styles.inputContainer}>
+        
         <p>
           Código do exemplar:
         </p>

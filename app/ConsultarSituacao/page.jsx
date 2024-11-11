@@ -54,6 +54,8 @@ function Devolucao() {
 
                 <div className={Styles.divBusca}>
                     <div className={Styles.divInput}>
+
+                        <h3>Busque por situação</h3>
                         <input
                             className={Styles.inputBox}
                             type="text"
