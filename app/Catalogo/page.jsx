@@ -1,19 +1,17 @@
-"use client";
+      "use client";
 
-import React, { useState } from 'react'
-import Styles from '@/app/Catalogo/catalogo.module.css'
-
-
+import React, { useState } from 'react';
+import Styles from '@/app/Catalogo/catalogo.module.css';
 
 export default function Catalogo() {
   const [Exemplar, setExemplar] = useState('');
-  const [autor, setAutor] = useState('')
-  const [assunto, setAssunto] = useState('')
-  const [nChamada, setNChamada] = useState('')
-  const [acervo, setAcervo] = useState('')
-  const [ISBN, setISBN] = useState('')
-  const [quantidade, setQuantidade] = useState('')
-  const [titulo, setTitulo] = useState('')
+  const [autor, setAutor] = useState('');
+  const [assunto, setAssunto] = useState('');
+  const [nChamada, setNChamada] = useState('');
+  const [acervo, setAcervo] = useState('');
+  const [ISBN, setISBN] = useState('');
+  const [quantidade, setQuantidade] = useState('');
+  const [titulo, setTitulo] = useState('');
   const [mensagemErro, setMensagemErro] = useState('');
   const [mensagemSucesso, setMensagemSucesso] = useState('');
 
@@ -21,45 +19,82 @@ export default function Catalogo() {
     e.preventDefault();
 
     const requestBody = {
-        Exemplar: Exemplar,
-        Autor: autor,
-        Título: titulo,
-        Assunto: assunto,
-        nChamada: nChamada,
-        Acervo: acervo,
-        ISBN: ISBN,
-        Quantidade: quantidade,
+      Exemplar: Exemplar,
+      Autor: autor,
+      Título: titulo,
+      Assunto: assunto,
+      nChamada: nChamada,
+      Acervo: acervo,
+      ISBN: ISBN,
+      Quantidade: quantidade,
     };
 
     try {
-        const response = await fetch('http://localhost:3001/registraracervo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestBody),
-        });
+      const response = await fetch('http://localhost:3001/registraracervo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      });
 
-        if (response.ok) {
-            setMensagemSucesso('Catálogo criado com sucesso!');
-            setTimeout(() => {
-              setMensagemSucesso(''); // Limpa a mensagem de sucesso
-              window.location.reload(); // Recarrega a página
-          }, 3000); 
+      if (response.ok) {
+        // Atualizar a situação do exemplar para 'Disponível'
+        await atualizarSituacaoExemplar(Exemplar, 'Disponível');
 
-        } else {
-            const errorMessage = `Erro ao criar catálogo, dados inválidos`;
-            setMensagemErro(errorMessage);
-            setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
-        }
-    } catch (error) {
-        setMensagemErro('Erro ao criar catálogo: ' + error);
+        setMensagemSucesso('Catálogo criado com sucesso!');
+        setTimeout(() => {
+          setMensagemSucesso(''); // Limpa a mensagem de sucesso
+          window.location.reload(); // Recarrega a página
+        }, 3000);
+
+      } else {
+        const errorMessage = `Erro ao criar catálogo, dados inválidos`;
+        setMensagemErro(errorMessage);
         setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+      }
+    } catch (error) {
+      setMensagemErro('Erro ao criar catálogo: ' + error);
+      setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
     }
-};
+  };
 
+  // Função para atualizar a situação do exemplar
+  const atualizarSituacaoExemplar = async (exemplar, situacao) => {
+    try {
+      // Buscar o exemplar atual
+      const response = await fetch(`http://localhost:3001/buscaracervo/${exemplar}`);
+      if (!response.ok) {
+        throw new Error('Erro ao buscar o exemplar: ' + response.status);
+      }
+
+      const exemplarData = await response.json();
+
+      // Atualizar apenas o campo Situacao
+      const updatedData = {
+        ...exemplarData,
+        Situacao: situacao,
+        // Inclua outros campos que você deseja preservar
+      };
+
+      // Enviar a atualização para o servidor
+      const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${exemplar}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!updateResponse.ok) {
+        const errorMessage = `Erro ao atualizar a situação do exemplar`;
+        setMensagemErro(errorMessage);
+        setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+      }
+    } catch (error) {
+      setMensagemErro('Erro ao atualizar a situação do exemplar: ' + error);
+      setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
+    }
+  };
 
   return (
     <>
-
       {mensagemSucesso && (
         <div className={Styles.notificacao}>
           {mensagemSucesso}
@@ -86,9 +121,7 @@ export default function Catalogo() {
         <input
           value={autor}
           onChange={(e) => setAutor(e.target.value)}
-          className={Styles.inputBox} required>
-
-        </input>
+          className={Styles.inputBox} required />
       </div>
       <div className={Styles.inputContainer}>
         <p>
@@ -97,8 +130,7 @@ export default function Catalogo() {
         <input
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
-          className={Styles.inputBox} required>
-        </input>
+          className={Styles.inputBox} required />
       </div>
       <div className={Styles.inputContainer}>
         <p>
@@ -107,8 +139,7 @@ export default function Catalogo() {
         <input
           value={assunto}
           onChange={(e) => setAssunto(e.target.value)}
-          className={Styles.inputBox} required>
-        </input>
+          className={Styles.inputBox} required />
       </div>
 
       <div className={Styles.inputContainer}>
@@ -118,8 +149,7 @@ export default function Catalogo() {
         <input
           value={nChamada}
           onChange={(e) => setNChamada(e.target.value)}
-          className={Styles.inputBox} required>
-        </input>
+          className={Styles.inputBox} required />
       </div>
 
       <div className={Styles.inputContainer}>
@@ -129,8 +159,7 @@ export default function Catalogo() {
         <input
           value={acervo}
           onChange={(e) => setAcervo(e.target.value)}
-          className={Styles.inputBox} required>
-        </input>
+          className={Styles.inputBox} required />
       </div>
 
       <div className={Styles.inputContainer}>
@@ -140,8 +169,7 @@ export default function Catalogo() {
         <input
           value={ISBN}
           onChange={(e) => setISBN(e.target.value)}
-          className={Styles.inputBox} required>
-        </input>
+          className={Styles.inputBox} required />
       </div>
 
       <div className={Styles.inputContainer}>
@@ -151,13 +179,12 @@ export default function Catalogo() {
         <input
           value={quantidade}
           onChange={(e) => setQuantidade(e.target.value)}
-          className={Styles.inputBox} required>
-        </input>
+          className={Styles.inputBox} required />
       </div>
 
       <div className={Styles.inputContainer}>
         <input className={Styles.inputButton} type="button" onClick={createAcervo} value={'Registrar'} />
       </div>
     </>
-  )
+  );
 }
