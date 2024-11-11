@@ -83,6 +83,7 @@ export default function Catalogo() {
 
     return (
         <>
+        
             <form onSubmit={(e) => e.preventDefault()}>
                 {mensagemSucesso && (
                     <div className={Styles.notificacao}>
@@ -96,8 +97,15 @@ export default function Catalogo() {
                     </div>
                 )}
 
+               
+
                 <div className={Styles.div1}>
+                    <h3 className={Styles.h3}>Atualize acervo</h3>
+                    <br />
+                    
                     <label className={Styles.form}>
+
+                    
                         <input
                             className={Styles.inputB}
                             type="text"

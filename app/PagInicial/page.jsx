@@ -41,7 +41,7 @@ const PagInicialSemCadastro = (props) => {
                             <Image src="/livros.png" alt="Button Image" width={200} height={200} />
                         </Link>
                         </button>
-                        <label>Consultar Todas SItuações</label>
+                        <label>Consultar Todas Situações</label>
                     </div>
 
 

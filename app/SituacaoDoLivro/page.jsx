@@ -43,6 +43,9 @@ function Devolucao() {
 
         <div className={Styles.divBusca}>
           <div className={Styles.divInput}>
+
+            <h3>Busque pela situação do livro</h3>
+
             <input
               className={Styles.inputBox}
               type="text"

@@ -19,7 +19,7 @@ function Devolucao() {
             setTimeout(() => setMensagemErroExemplar(''), 3000);
             return;
         }
-    
+
         try {
             const response = await fetch(`http://localhost:3001/buscartitulo/${Titulo}`);
             if (response.ok) {
@@ -54,6 +54,10 @@ function Devolucao() {
 
                 <div className={Styles.divBusca}>
                     <div className={Styles.divInput}>
+
+                        <h3>Busque livro por título</h3>
+                        
+
                         <input
                             className={Styles.inputBox}
                             type="text"
@@ -95,12 +99,12 @@ function Devolucao() {
                                         <td>{livro.ISBN}</td>
                                         <td>{livro.Quantidade}</td>
                                         <td>{livro.Situacao}</td>
-                                        
+
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    
+
                                 </tr>
                             )}
                         </tbody>
