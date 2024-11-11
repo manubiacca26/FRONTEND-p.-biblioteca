@@ -34,6 +34,16 @@ const PagInicialSemCadastro = (props) => {
                         <label>Consultar Reserva</label>
                     </div>
 
+                    <div className={Style.box}>
+
+                        <button className={Style.botao}>
+                        <Link href="./ConsultarSituacao">
+                            <Image src="/livros.png" alt="Button Image" width={200} height={200} />
+                        </Link>
+                        </button>
+                        <label>Consultar Todas SItuações</label>
+                    </div>
+
 
                     <div className={Style.box}>
                         <button className={Style.botao}>
