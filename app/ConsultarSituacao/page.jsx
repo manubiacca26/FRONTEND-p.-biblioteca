@@ -4,28 +4,28 @@ import { useState } from "react";
 import Styles from '@/app/ConsultarTitulo/page.module.css'
 
 function Devolucao() {
-    const [Titulo, setTitulo] = useState('');
+    const [Situacao, setSituacao] = useState('');
     const [livros, setLivros] = useState(null);
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
 
     const limparExemplar = () => {
         setLivros(null); // Corrigido para null ao invés de ''
-        setTitulo('');
+        setSituacao('');
     };
 
     const buscarExemplar = async () => {
-        if (Titulo.trim() === '') {
-            setMensagemErroExemplar('Por favor, insira um título para buscar.');
+        if (Situacao.trim() === '') {
+            setMensagemErroExemplar('Por favor, insira uma situação para buscar.');
             setTimeout(() => setMensagemErroExemplar(''), 3000);
             return;
         }
     
         try {
-            const response = await fetch(`http://localhost:3001/buscartitulo/${Titulo}`);
+            const response = await fetch(`http://localhost:3001/buscarsituacao/${Situacao}`);
             if (response.ok) {
                 const exemplarData = await response.json();
                 if (exemplarData.length === 0) {
-                    setMensagemErroExemplar('Nenhum exemplar encontrado para o título informado.');
+                    setMensagemErroExemplar('Nenhum exemplar encontrado para a situação informado.');
                     setTimeout(() => setMensagemErroExemplar(''), 3000);
                 } else {
                     setLivros(exemplarData);
@@ -57,9 +57,9 @@ function Devolucao() {
                         <input
                             className={Styles.inputBox}
                             type="text"
-                            placeholder="Titulo do Exemplar"
-                            value={Titulo}
-                            onChange={(e) => setTitulo(e.target.value)} // Atualiza o estado com o valor do input
+                            placeholder="Situação do Exemplar"
+                            value={Situacao}
+                            onChange={(e) => setSituacao(e.target.value)} // Atualiza o estado com o valor do input
                         />
                     </div>
                     <button className={Styles.inputButton} type="button" onClick={buscarExemplar}>Buscar</button>
