@@ -13,7 +13,7 @@ export default function Emprestimo() {
     const [mensagemErroAluno, setMensagemErroAluno] = useState('');
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('')
 
-    
+
 
     const formatarData = (data) => {
         const dataObj = new Date(data);
@@ -43,7 +43,7 @@ export default function Emprestimo() {
                 });
 
                 if (response.ok) {
-                  
+
                     // Atualizar o estado local para refletir a nova situação
                     setLivros(prevLivros => ({
                         ...prevLivros,
@@ -54,8 +54,8 @@ export default function Emprestimo() {
                     setTimeout(() => {
                         setMensagemSucesso(''); // Limpa a mensagem de sucesso
                         window.location.reload(); // Recarrega a página
-                      }, 3000); // Espera 3 segundos antes de recarregar
-    
+                    }, 3000); // Espera 3 segundos antes de recarregar
+
                 } else {
                     const errorMessage = `Erro ao criar reserva, dados inválidos`;
                     setMensagemErro(errorMessage);
@@ -104,7 +104,7 @@ export default function Emprestimo() {
                 setLivros(exemplarData);
                 setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
 
-               
+
             } else {
                 const errorMessage = `Erro ao buscar Exemplar: ${response.status}`;
                 setMensagemErroExemplar(errorMessage);
@@ -164,8 +164,11 @@ export default function Emprestimo() {
                 </div>
             )}
 
+            
+
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
+                <h3>Busque aluno por RM</h3>
                     <input
                         className={Styles.inputBox}
                         type="text"
@@ -216,8 +219,11 @@ export default function Emprestimo() {
                 </div>
             </div>
 
+            
+
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
+                <h3>Busque livro por exemplar</h3>
                     <input
                         className={Styles.inputBox}
                         type="text"
