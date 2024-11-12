@@ -9,7 +9,7 @@ const SignIn = () => {
 
   const handleEntrar = () => {
     const usuarioFixo = 'BIBLIOTECA';
-    const senhaFixa = 'sesi2024';
+    const senhaFixa = 'sesi242biblioteca';
 
     if (!usuario || !senha) {
       setMsgError('Por favor, preencha todos os campos.');
