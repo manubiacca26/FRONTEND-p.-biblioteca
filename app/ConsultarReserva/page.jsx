@@ -119,24 +119,26 @@ export default function Emprestimo() {
                     <table className={Styles.userTable}>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Credencial</th>
+                                <th>Exemplar</th>
+                                <th>Credencial RM</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {reserva && (
-                                <>
-                                    <tr>
-                                        <td>Exemplar</td>
+                            {reserva && reserva.length > 0 ? (
+                                reserva.map((reserva, index) => (
+                                    <tr key={index}>
                                         <td>{reserva.Exemplar}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>RM do Aluno</td>
                                         <td>{reserva.RM}</td>
+                                        
                                     </tr>
-                                </>
+                                ))
+                            ) : (
+                                <tr>
+                                    
+                                </tr>
                             )}
                         </tbody>
+                        
                     </table>
                 </div>
             </div>
