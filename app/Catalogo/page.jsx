@@ -61,7 +61,7 @@ export default function Catalogo() {
   const atualizarSituacaoExemplar = async (exemplar, situacao) => {
     try {
       // Buscar o exemplar atual
-      const response = await fetch(`http://localhost:3001/buscaracervo/${exemplar}`);
+      const response = await fetch(`https://backend-5o6b.onrender.com//buscaracervo/${exemplar}`);
       if (!response.ok) {
         throw new Error('Erro ao buscar o exemplar: ' + response.status);
       }
