@@ -55,7 +55,7 @@ export default function Emprestimo() {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/emprestar', {
+            const response = await fetch('https://backend-5o6b.onrender.com/emprestar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody),

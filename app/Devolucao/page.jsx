@@ -25,7 +25,7 @@ function Devolucao() {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/buscaremprestimo/${Exemplar}`, {
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscaremprestimo/${Exemplar}`, {
                 method: 'GET',
             });
 
@@ -64,7 +64,7 @@ function Devolucao() {
 
     const deletarEmprestimo = async (Exemplar) => {
         try {
-            const response = await fetch(`http://localhost:3001/deletaremprestimo/${Exemplar}`, {
+            const response = await fetch(`https://backend-5o6b.onrender.com/deletaremprestimo/${Exemplar}`, {
                 method: 'DELETE',
             });
 
@@ -80,7 +80,7 @@ function Devolucao() {
     const devolverExemplar = async (Exemplar, index) => {
         try {
             // Buscar o exemplar atual
-            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscaracervo/${Exemplar}`);
             if (!response.ok) {
                 throw new Error('Erro ao buscar o exemplar: ' + response.status);
             }
@@ -95,7 +95,7 @@ function Devolucao() {
             };
 
             // Enviar a atualização para o servidor
-            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
+            const updateResponse = await fetch(`https://backend-5o6b.onrender.com/atualizaracervo/${Exemplar}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedData),
