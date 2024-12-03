@@ -17,7 +17,7 @@ export default function Catalogo() {
 
     const buscarExemplar = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscaracervo/${Exemplar}`);
             if (!response.ok) {
                 throw new Error('Erro ao buscar o exemplar: ' + response.status);
             }
@@ -57,7 +57,7 @@ export default function Catalogo() {
                 Situacao: situacao,
             };
 
-            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
+            const updateResponse = await fetch(`https://backend-5o6b.onrender.com/atualizaracervo/${Exemplar}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedData),

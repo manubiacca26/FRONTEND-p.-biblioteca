@@ -98,7 +98,7 @@ export default function Emprestimo() {
 
     const buscarExemplar = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscaracervo/${Exemplar}`);
             if (response.ok) {
                 const exemplarData = await response.json();
                 setLivros(exemplarData);

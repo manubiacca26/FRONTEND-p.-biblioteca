@@ -55,7 +55,7 @@ export default function Emprestimo() {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/emprestar', {
+            const response = await fetch('https://backend-5o6b.onrender.com/emprestar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody),
@@ -92,7 +92,7 @@ export default function Emprestimo() {
     const atualizarSituacaoExemplar = async () => {
         try {
             // Buscar o exemplar atual
-            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscaracervo/${Exemplar}`);
             if (!response.ok) {
                 throw new Error('Erro ao buscar o exemplar: ' + response.status);
             }
@@ -107,7 +107,7 @@ export default function Emprestimo() {
             };
 
             // Enviar a atualização para o servidor
-            const updateResponse = await fetch(`http://localhost:3001/atualizaracervo/${Exemplar}`, {
+            const updateResponse = await fetch(`https://backend-5o6b.onrender.com/atualizaracervo/${Exemplar}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedData),
@@ -131,7 +131,7 @@ export default function Emprestimo() {
         if (isRMDisabled) {
             setColaborador(null);
             try {
-                const response = await fetch(`http://localhost:3001/alunos/${RM}`);
+                const response = await fetch(`https://backend-5o6b.onrender.com/alunos/${RM}`);
                 if (response.ok) {
                     const alunoData = await response.json();
                     setAluno(alunoData);
@@ -152,7 +152,7 @@ export default function Emprestimo() {
         if (isCPFDisabled) {
             setAluno(null);
             try {
-                const response = await fetch(`http://localhost:3001/listarcolaborador/${CPF}`);
+                const response = await fetch(`https://backend-5o6b.onrender.com/listarcolaborador/${CPF}`);
                 if (response.ok) {
                     const colaboradorData = await response.json();
                     setColaborador(colaboradorData);
@@ -171,7 +171,7 @@ export default function Emprestimo() {
 
     const buscarExemplar = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/buscaracervo/${Exemplar}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscaracervo/${Exemplar}`);
             if (response.ok) {
                 const exemplarData = await response.json();
                 setLivros(exemplarData);
