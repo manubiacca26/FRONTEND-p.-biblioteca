@@ -4,31 +4,33 @@ import { useState } from "react";
 import Styles from '@/app/ConsultarTitulo/page.module.css'
 
 function Devolucao() {
-    const [Titulo, setTitulo] = useState('');
-    const [livros, setLivros] = useState(null);
+    const [título, settítulo] = useState('');
+    const [livros, setLivros] = useState([]);
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
 
     const limparExemplar = () => {
         setLivros(null); // Corrigido para null ao invés de ''
-        setTitulo('');
+        settítulo('');
     };
 
     const buscarExemplar = async () => {
-        if (Titulo.trim() === '') {
+        if (título.trim() === '') {
             setMensagemErroExemplar('Por favor, insira um título para buscar.');
             setTimeout(() => setMensagemErroExemplar(''), 3000);
             return;
         }
 
         try {
-            const response = await fetch(`https://backend-5o6b.onrender.com/buscartitulo/${Titulo}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscartitulo/${título}`);
             if (response.ok) {
                 const exemplarData = await response.json();
+                console.log(exemplarData)
                 if (exemplarData.length === 0) {
                     setMensagemErroExemplar('Nenhum exemplar encontrado para o título informado.');
                     setTimeout(() => setMensagemErroExemplar(''), 3000);
                 } else {
-                    setLivros(exemplarData);
+                    setLivros([exemplarData]);
+                    console.log("Livros" + livros)
                     setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
                 }
             } else {
@@ -61,9 +63,9 @@ function Devolucao() {
                         <input
                             className={Styles.inputBox}
                             type="text"
-                            placeholder="Titulo do Exemplar"
-                            value={Titulo}
-                            onChange={(e) => setTitulo(e.target.value)} // Atualiza o estado com o valor do input
+                            placeholder="Título do Exemplar"
+                            value={título}
+                            onChange={(e) => settítulo(e.target.value)} // Atualiza o estado com o valor do input
                         />
                     </div>
                     <button className={Styles.inputButton} type="button" onClick={buscarExemplar}>Buscar</button>
@@ -94,7 +96,7 @@ function Devolucao() {
                                         <td>{livro.autor}</td>
                                         <td>{livro.título}</td>
                                         <td>{livro.assunto}</td>
-                                        <td>{livro.nChamada}</td>
+                                        <td>{livro.nchamada}</td>
                                         <td>{livro.acervo}</td>
                                         <td>{livro.isbn}</td>
                                         <td>{livro.quantidade}</td>

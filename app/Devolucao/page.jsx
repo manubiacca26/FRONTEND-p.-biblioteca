@@ -7,6 +7,7 @@ function Devolucao() {
     const [Exemplar, setExemplar] = useState('');
     const [livros, setLivros] = useState([]); // Mudei para um array
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
+    const [mensagemErro, setMensagemErro] = useState('');
     const [mensagemSucesso, setMensagemSucesso] = useState('');
 
     const handleKeyDown = (event) => {
@@ -90,7 +91,7 @@ function Devolucao() {
             // Atualizar apenas o campo Situacao
             const updatedData = {
                 ...exemplarData,
-                Situacao: 'Disponivel',
+                situacao: 'Disponível',
                 // Inclua outros campos que você deseja preservar
             };
 
@@ -141,7 +142,7 @@ function Devolucao() {
 
     return (
         <>
-    
+
             <form onKeyDown={handleKeyDown}>
                 {mensagemErroExemplar && (
                     <div className={Styles.notificacaoErro}>
@@ -154,12 +155,18 @@ function Devolucao() {
                     </div>
                 )}
 
+                {mensagemErro && (
+                    <div className={Styles.notificacaoErro}>
+                        {mensagemErro}
+                    </div>
+                )}
+
                 <div className={Styles.box1}>
 
                     <label className={Styles.form}>
-                    <h3>Busque um exemplar para devolução</h3>
+                        <h3>Busque um exemplar para devolução</h3>
 
-                    <br />
+                        <br />
 
                         <input
                             className={Styles.inputBox}
@@ -194,7 +201,7 @@ function Devolucao() {
                                 <th>Data Devolução</th>
                                 <th>Devolver Unidade</th>
                                 <th>Remover</th>
-                               
+
 
                             </tr>
                         </thead>
@@ -220,7 +227,7 @@ function Devolucao() {
                                             className={Styles.removerButton}
                                             onClick={() => removerExemplar(index)}
                                         >
-                                            X
+                                            
                                         </button>
 
                                     </td>
