@@ -90,15 +90,15 @@ function Devolucao() {
                             {livros && livros.length > 0 ? (
                                 livros.map((livro, index) => (
                                     <tr key={index}>
-                                        <td>{livro.Exemplar}</td>
-                                        <td>{livro.Autor}</td>
-                                        <td>{livro.Título}</td>
-                                        <td>{livro.Assunto}</td>
+                                        <td>{livro.exemplar}</td>
+                                        <td>{livro.autor}</td>
+                                        <td>{livro.título}</td>
+                                        <td>{livro.assunto}</td>
                                         <td>{livro.nChamada}</td>
-                                        <td>{livro.Acervo}</td>
-                                        <td>{livro.ISBN}</td>
-                                        <td>{livro.Quantidade}</td>
-                                        <td>{livro.Situacao}</td>
+                                        <td>{livro.acervo}</td>
+                                        <td>{livro.isbn}</td>
+                                        <td>{livro.quantidade}</td>
+                                        <td>{livro.situacao}</td>
 
                                     </tr>
                                 ))

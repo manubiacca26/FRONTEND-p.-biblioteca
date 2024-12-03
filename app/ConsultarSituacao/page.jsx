@@ -21,7 +21,7 @@ function Devolucao() {
         }
     
         try {
-            const response = await fetch(`http://localhost:3001/buscarsituacao/${Situacao}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/buscarsituacao/${Situacao}`);
             if (response.ok) {
                 const exemplarData = await response.json();
                 if (exemplarData.length === 0) {
