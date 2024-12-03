@@ -198,19 +198,19 @@ export default function Emprestimo() {
                                 <>
                                     <tr>
                                         <td>Nome</td>
-                                        <td>{aluno.Nome}</td>
+                                        <td>{aluno.nome}</td>
                                     </tr>
                                     <tr>
                                         <td>RM</td>
-                                        <td>{aluno.RM}</td>
+                                        <td>{aluno.rm}</td>
                                     </tr>
                                     <tr>
                                         <td>Sexo</td>
-                                        <td>{aluno.Sexo}</td>
+                                        <td>{aluno.sexo}</td>
                                     </tr>
                                     <tr>
                                         <td>Data Nascimento</td>
-                                        <td>{formatarData(aluno.Data_Nascimento)}</td>
+                                        <td>{formatarData(aluno.data_nascimento)}</td>
                                     </tr>
                                 </>
                             )}
@@ -251,31 +251,31 @@ export default function Emprestimo() {
                                 <>
                                     <tr>
                                         <td>Exemplar</td>
-                                        <td>{livros.Exemplar}</td>
+                                        <td>{livros.exemplar}</td>
                                     </tr>
                                     <tr>
                                         <td>Número de Chamada</td>
-                                        <td>{livros.nChamada}</td>
+                                        <td>{livros.nchamada}</td>
                                     </tr>
                                     <tr>
                                         <td>Assunto</td>
-                                        <td>{livros.Assunto}</td>
+                                        <td>{livros.assunto}</td>
                                     </tr>
                                     <tr>
                                         <td>ISBN</td>
-                                        <td>{livros.ISBN}</td>
+                                        <td>{livros.isbm}</td>
                                     </tr>
                                     <tr>
                                         <td>Título</td>
-                                        <td>{livros.Título}</td>
+                                        <td>{livros.título}</td>
                                     </tr>
                                     <tr>
                                         <td>Autor</td>
-                                        <td>{livros.Autor}</td>
+                                        <td>{livros.autor}</td>
                                     </tr>
                                     <tr>
                                         <td>Acervo</td>
-                                        <td>{livros.Acervo}</td>
+                                        <td>{livros.acervo}</td>
                                     </tr>
                                 </>
                             )}
