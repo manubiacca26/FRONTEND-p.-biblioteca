@@ -325,7 +325,7 @@ export default function Emprestimo() {
                                     </tr>
                                     <tr>
                                         <td>Data Nascimento</td>
-                                        <td>{colaborador.dataNasc}</td>
+                                        <td>{formatarData(colaborador.datanasc)}</td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
