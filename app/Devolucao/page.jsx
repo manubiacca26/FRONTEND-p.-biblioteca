@@ -217,7 +217,7 @@ function Devolucao() {
                                     <td className={Styles.ajuste}>
                                         <button
                                             className={Styles.devolvesolo}
-                                            onClick={() => devolverExemplar(livro.exemplar, index)}
+                                            onClick={() => devolverExemplar(livro.exemplar, index)} //oi
                                         >
                                             Devolver
                                         </button>
