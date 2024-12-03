@@ -26,9 +26,11 @@ export default function Emprestimo() {
             if (reservaResponse.ok) {
                 const reservaData = await reservaResponse.json();
                 console.log("Dados da reserva:", reservaData); // Log para depuração
+                console.log (reservaData.lenght)
 
-                if (Array.isArray(reservaData) && reservaData.length > 0) { // Verifica se é um array e se não está vazio
+                if (reservaData.length > 0) { // Verifica se é um array e se não está vazio
                     setReserva([reservaData]);
+                    console.log("reserva "+reserva)
                     setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
                 } else {
                     setMensagemErroExemplar('Exemplar não encontrado.');
@@ -118,11 +120,11 @@ export default function Emprestimo() {
                         </thead>
                         <tbody>
                             {reserva && reserva.length > 0 ? (
-                                reserva.map((reserva, index) => (
+                                reserva.map((reservas, index) => (
                                     <tr key={index}>
                                     
-                                        <td>{reserva.exemplar}</td>
-                                        <td>{reserva.rm}</td>
+                                        <td>{reservas.exemplar}</td>
+                                        <td>{reservas.rm}</td>
                                         
                                     </tr>
                                 ))
