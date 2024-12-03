@@ -201,15 +201,15 @@ function Devolucao() {
                         <tbody>
                             {livros.map((livro, index) => (
                                 <tr key={index}>
-                                    <td>{livro.Exemplar}</td>
-                                    <td>{livro.RM}</td>
-                                    <td>{livro.CPF}</td>
-                                    <td>{formatarData(livro.dataEmprestimo)}</td>
-                                    <td>{formatarData(livro.dataDevolucao)}</td>
+                                    <td>{livro.exemplar}</td>
+                                    <td>{livro.rm}</td>
+                                    <td>{livro.cpf}</td>
+                                    <td>{formatarData(livro.dataemprestimo)}</td>
+                                    <td>{formatarData(livro.datadevolucao)}</td>
 
                                     <td className={Styles.ajuste}>
                                         <button
-                                            className={Styles.devolveSolo}
+                                            className={Styles.devolvesolo}
                                             onClick={() => devolverExemplar(livro.Exemplar, index)}
                                         >
                                             Devolver

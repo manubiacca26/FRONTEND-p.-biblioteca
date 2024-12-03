@@ -134,6 +134,7 @@ export default function Emprestimo() {
                 const response = await fetch(`https://backend-5o6b.onrender.com/alunos/${RM}`);
                 if (response.ok) {
                     const alunoData = await response.json();
+                    console.log(alunoData)
                     setAluno(alunoData);
                     setMensagemErroAluno(''); // Limpa a mensagem de erro, se houver
                 } else {
@@ -174,6 +175,7 @@ export default function Emprestimo() {
             const response = await fetch(`https://backend-5o6b.onrender.com/buscaracervo/${Exemplar}`);
             if (response.ok) {
                 const exemplarData = await response.json();
+                console.log(exemplarData)
                 setLivros(exemplarData);
                 setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
 
@@ -291,19 +293,19 @@ export default function Emprestimo() {
                                 <>
                                     <tr>
                                         <td>Nome</td>
-                                        <td>{aluno.Nome}</td>
+                                        <td>{aluno.nome}</td>
                                     </tr>
                                     <tr>
                                         <td>RM</td>
-                                        <td>{aluno.RM}</td>
+                                        <td>{aluno.rm}</td>
                                     </tr>
                                     <tr>
                                         <td>Sexo</td>
-                                        <td>{aluno.Sexo}</td>
+                                        <td>{aluno.sexo}</td>
                                     </tr>
                                     <tr>
                                         <td>Data Nascimento</td>
-                                        <td>{formatarData(aluno.Data_Nascimento)}</td>
+                                        <td>{formatarData(aluno.data_nascimento)}</td>
                                     </tr>
                                 </>
                             )}
@@ -318,16 +320,12 @@ export default function Emprestimo() {
                                         <td>{colaborador.nome}</td>
                                     </tr>
                                     <tr>
-                                        <td>Sexo</td>
-                                        <td>{colaborador.Sexo}</td>
-                                    </tr>
-                                    <tr>
                                         <td>Telefone</td>
                                         <td>{colaborador.telefone}</td>
                                     </tr>
                                     <tr>
                                         <td>Data Nascimento</td>
-                                        <td>{colaborador.dataNasc}</td>
+                                        <td>{formatarData(colaborador.datanasc)}</td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
@@ -370,31 +368,31 @@ export default function Emprestimo() {
                                 <>
                                     <tr>
                                         <td>Exemplar</td>
-                                        <td>{livros.Exemplar}</td>
+                                        <td>{livros.exemplar}</td>
                                     </tr>
                                     <tr>
                                         <td>Número de Chamada</td>
-                                        <td>{livros.nChamada}</td>
+                                        <td>{livros.nchamada}</td>
                                     </tr>
                                     <tr>
                                         <td>Assunto</td>
-                                        <td>{livros.Assunto}</td>
+                                        <td>{livros.assunto}</td>
                                     </tr>
                                     <tr>
                                         <td>ISBN</td>
-                                        <td>{livros.ISBN}</td>
+                                        <td>{livros.isbn}</td>
                                     </tr>
                                     <tr>
                                         <td>Título</td>
-                                        <td>{livros.Título}</td>
+                                        <td>{livros.título}</td>
                                     </tr>
                                     <tr>
                                         <td>Autor</td>
-                                        <td>{livros.Autor}</td>
+                                        <td>{livros.autor}</td>
                                     </tr>
                                     <tr>
                                         <td>Acervo</td>
-                                        <td>{livros.Acervo}</td>
+                                        <td>{livros.acervo}</td>
                                     </tr>
                                 </>
                             )}

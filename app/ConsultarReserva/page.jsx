@@ -23,7 +23,7 @@ export default function Emprestimo() {
 
         try {
             // Primeiro, busque a reserva com base no exemplar
-            const reservaResponse = await fetch(`http://localhost:3001/todasreservas/${Exemplar}`);
+            const reservaResponse = await fetch(`https://backend-5o6b.onrender.com/todasreservas/${Exemplar}`);
 
             if (reservaResponse.ok) {
                 const reservaData = await reservaResponse.json();
