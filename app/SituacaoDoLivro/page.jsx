@@ -73,35 +73,35 @@ function Devolucao() {
                   <>
                     <tr>
                       <td>Exemplar</td>
-                      <td>{livros.Exemplar}</td>
+                      <td>{livros.exemplar}</td>
                     </tr>
                     <tr>
                       <td>Número de Chamada</td>
-                      <td>{livros.nChamada}</td>
+                      <td>{livros.nchamada}</td>
                     </tr>
                     <tr>
                       <td>Assunto</td>
-                      <td>{livros.Assunto}</td>
+                      <td>{livros.assunto}</td>
                     </tr>
                     <tr>
                       <td>ISBN</td>
-                      <td>{livros.ISBN}</td>
+                      <td>{livros.isbn}</td>
                     </tr>
                     <tr>
                       <td>Título</td>
-                      <td>{livros.Título}</td>
+                      <td>{livros.título}</td>
                     </tr>
                     <tr>
                       <td>Autor</td>
-                      <td>{livros.Autor}</td>
+                      <td>{livros.autor}</td>
                     </tr>
                     <tr>
                       <td>Acervo</td>
-                      <td>{livros.Acervo}</td>
+                      <td>{livros.acervo}</td>
                     </tr>
                     <tr>
                       <td>Situação</td>
-                      <td>{livros.Situacao}</td>
+                      <td>{livros.situacao}</td>
                     </tr>
                   </>
                 )}
