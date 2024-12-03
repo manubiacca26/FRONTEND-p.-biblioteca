@@ -319,10 +319,6 @@ export default function Emprestimo() {
                                         <td>{colaborador.nome}</td>
                                     </tr>
                                     <tr>
-                                        <td>Sexo</td>
-                                        <td>{colaborador.sexo}</td>
-                                    </tr>
-                                    <tr>
                                         <td>Telefone</td>
                                         <td>{colaborador.telefone}</td>
                                     </tr>
