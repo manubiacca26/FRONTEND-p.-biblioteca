@@ -227,7 +227,7 @@ function Devolucao() {
                                             className={Styles.removerButton}
                                             onClick={() => removerExemplar(index)}
                                         >
-                                            X
+                                            
                                         </button>
 
                                     </td>
