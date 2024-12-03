@@ -5,7 +5,7 @@ import Styles from '@/app/ConsultarTitulo/page.module.css'
 
 function Devolucao() {
     const [título, settítulo] = useState('');
-    const [livros, setLivros] = useState(null);
+    const [livros, setLivros] = useState([]);
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
 
     const limparExemplar = () => {
@@ -24,11 +24,13 @@ function Devolucao() {
             const response = await fetch(`https://backend-5o6b.onrender.com/buscartitulo/${título}`);
             if (response.ok) {
                 const exemplarData = await response.json();
+                console.log(exemplarData)
                 if (exemplarData.length === 0) {
                     setMensagemErroExemplar('Nenhum exemplar encontrado para o título informado.');
                     setTimeout(() => setMensagemErroExemplar(''), 3000);
                 } else {
-                    setLivros(exemplarData);
+                    setLivros([exemplarData]);
+                    console.log("Livros" + livros)
                     setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
                 }
             } else {
@@ -61,7 +63,7 @@ function Devolucao() {
                         <input
                             className={Styles.inputBox}
                             type="text"
-                            placeholder="título do Exemplar"
+                            placeholder="Título do Exemplar"
                             value={título}
                             onChange={(e) => settítulo(e.target.value)} // Atualiza o estado com o valor do input
                         />
