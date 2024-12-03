@@ -5,14 +5,12 @@ import Styles from '@/app/ConsultarReserva/page.module.css';
 
 export default function Emprestimo() {
     const [Exemplar, setExemplar] = useState('');
-    const [reserva, setReserva] = useState(null);
+    const [reserva, setReserva] = useState([]);
     const [mensagemSucesso, setMensagemSucesso] = useState('');
     const [mensagemErro, setMensagemErro] = useState('');
     const [mensagemErroAluno, setMensagemErroAluno] = useState('');
     const [mensagemErroExemplar, setMensagemErroExemplar] = useState('');
     const [mensagemErroColaborador, setMensagemErroColaborador] = useState('');
-
-
 
     const buscarExemplar = async () => {
         if (!Exemplar) {
@@ -22,13 +20,15 @@ export default function Emprestimo() {
         }
 
         try {
-            // Primeiro, busque a reserva com base no exemplar
+            console.log("Buscando exemplar:", Exemplar); // Log para depuração
             const reservaResponse = await fetch(`https://backend-5o6b.onrender.com/todasreservas/${Exemplar}`);
 
             if (reservaResponse.ok) {
                 const reservaData = await reservaResponse.json();
-                if (reservaData) { // Verifica se a reservaData não está vazia
-                    setReserva(reservaData); // Armazena as informações da reserva
+                console.log("Dados da reserva:", reservaData); // Log para depuração
+
+                if (Array.isArray(reservaData) && reservaData.length > 0) { // Verifica se é um array e se não está vazio
+                    setReserva([reservaData]);
                     setMensagemErroExemplar(''); // Limpa a mensagem de erro, se houver
                 } else {
                     setMensagemErroExemplar('Exemplar não encontrado.');
@@ -45,11 +45,9 @@ export default function Emprestimo() {
         }
     };
 
-
-
     const limparExemplar = () => {
         setExemplar('');
-        setReserva('')
+        setReserva(null); // Limpa o estado da reserva
     };
 
     const handleKeyDown = (event) => {
@@ -64,7 +62,6 @@ export default function Emprestimo() {
         const numericValue = value.replace(/[^0-9]/g, '');
         setValue(numericValue);
     };
-
 
     return (
         <form onKeyDown={handleKeyDown}>
@@ -94,13 +91,9 @@ export default function Emprestimo() {
                 </div>
             )}
 
-
             <div className={Styles.divBusca}>
                 <div className={Styles.divInput}>
-
                     <h3>Busque um exemplar para consultar uma reserva</h3>
-
-
                     <input
                         className={Styles.inputBox}
                         type="text"
@@ -127,6 +120,7 @@ export default function Emprestimo() {
                             {reserva && reserva.length > 0 ? (
                                 reserva.map((reserva, index) => (
                                     <tr key={index}>
+                                    
                                         <td>{reserva.exemplar}</td>
                                         <td>{reserva.rm}</td>
                                         
