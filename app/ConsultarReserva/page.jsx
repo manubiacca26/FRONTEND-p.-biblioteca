@@ -127,8 +127,8 @@ export default function Emprestimo() {
                             {reserva && reserva.length > 0 ? (
                                 reserva.map((reserva, index) => (
                                     <tr key={index}>
-                                        <td>{reserva.Exemplar}</td>
-                                        <td>{reserva.RM}</td>
+                                        <td>{reserva.exemplar}</td>
+                                        <td>{reserva.rm}</td>
                                         
                                     </tr>
                                 ))
