@@ -217,7 +217,7 @@ function Devolucao() {
                                     <td className={Styles.ajuste}>
                                         <button
                                             className={Styles.devolvesolo}
-                                            onClick={() => devolverExemplar(livro.Exemplar, index)}
+                                            onClick={() => devolverExemplar(livro.exemplar, index)}
                                         >
                                             Devolver
                                         </button>
@@ -227,10 +227,13 @@ function Devolucao() {
                                             className={Styles.removerButton}
                                             onClick={() => removerExemplar(index)}
                                         >
+                                            X
                                             
                                         </button>
 
                                     </td>
+
+                                        
 
                                 </tr>
                             ))}
