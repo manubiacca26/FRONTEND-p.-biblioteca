@@ -36,7 +36,7 @@ export default function Emprestimo() {
             };
 
             try {
-                const response = await fetch('http://localhost:3001/reservar', {
+                const response = await fetch('https://backend-5o6b.onrender.com/reservar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(requestBody),
@@ -78,7 +78,7 @@ export default function Emprestimo() {
     const buscarAluno = async () => {
 
         try {
-            const response = await fetch(`http://localhost:3001/alunos/${RM}`);
+            const response = await fetch(`https://backend-5o6b.onrender.com/alunos/${RM}`);
             if (response.ok) {
                 const alunoData = await response.json();
                 setAluno(alunoData);
