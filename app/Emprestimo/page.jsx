@@ -134,6 +134,7 @@ export default function Emprestimo() {
                 const response = await fetch(`https://backend-5o6b.onrender.com/alunos/${RM}`);
                 if (response.ok) {
                     const alunoData = await response.json();
+                    console.log(alunoData)
                     setAluno(alunoData);
                     setMensagemErroAluno(''); // Limpa a mensagem de erro, se houver
                 } else {
@@ -291,19 +292,19 @@ export default function Emprestimo() {
                                 <>
                                     <tr>
                                         <td>Nome</td>
-                                        <td>{aluno.Nome}</td>
+                                        <td>{aluno.nome}</td>
                                     </tr>
                                     <tr>
                                         <td>RM</td>
-                                        <td>{aluno.RM}</td>
+                                        <td>{aluno.rm}</td>
                                     </tr>
                                     <tr>
                                         <td>Sexo</td>
-                                        <td>{aluno.Sexo}</td>
+                                        <td>{aluno.sexo}</td>
                                     </tr>
                                     <tr>
                                         <td>Data Nascimento</td>
-                                        <td>{formatarData(aluno.Data_Nascimento)}</td>
+                                        <td>{formatarData(aluno.data_nascimento)}</td>
                                     </tr>
                                 </>
                             )}
@@ -319,7 +320,7 @@ export default function Emprestimo() {
                                     </tr>
                                     <tr>
                                         <td>Sexo</td>
-                                        <td>{colaborador.Sexo}</td>
+                                        <td>{colaborador.sexo}</td>
                                     </tr>
                                     <tr>
                                         <td>Telefone</td>

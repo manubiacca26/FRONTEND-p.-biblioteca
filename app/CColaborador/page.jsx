@@ -36,7 +36,7 @@ export default function CreateUserPage() {
       // Formata a data para o formato desejado
       const formattedDataNasc = new Date(dataNasc).toISOString().replace('T', ' ').replace('Z', '');
 
-      const response = await fetch('https://backend-5o6b.onrender.com//registrarcolaborador', {
+      const response = await fetch('https://backend-5o6b.onrender.com/registrarcolaborador', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
