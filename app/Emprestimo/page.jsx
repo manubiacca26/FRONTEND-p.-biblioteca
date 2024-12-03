@@ -40,7 +40,7 @@ export default function Emprestimo() {
         e.preventDefault();
 
         // Verifique se o exemplar está emprestado
-        if (livros && livros.Situacao === 'Emprestado') {
+        if (livros && livros.situacao === 'Emprestado') {
             setMensagemErro('O exemplar já está emprestado. Não é possível criar o empréstimo.');
             setTimeout(() => setMensagemErro(''), 3000); // Limpa a mensagem de erro após 3 segundos
             return; // Impede a criação do empréstimo
@@ -50,8 +50,8 @@ export default function Emprestimo() {
             Exemplar: Exemplar,
             RM: RM || null,
             CPF: CPF || null,
-            dataEmprestimo: dataEmprestimo,
-            dataDevolucao: calcularDataDevolucao(dataEmprestimo),
+            dataemprestimo: dataEmprestimo,
+            datadevolucao: calcularDataDevolucao(dataEmprestimo),
         };
 
         try {
@@ -68,7 +68,7 @@ export default function Emprestimo() {
                 // Atualizar o estado local para refletir a nova situação
                 setLivros(prevLivros => ({
                     ...prevLivros,
-                    Situacao: 'Emprestado'
+                    situacao: 'Emprestado'
                 }));
 
                 setMensagemSucesso('Empréstimo criado com sucesso!');
@@ -102,7 +102,7 @@ export default function Emprestimo() {
             // Atualizar apenas o campo Situacao
             const updatedData = {
                 ...exemplarData,
-                Situacao: 'Emprestado',
+                situacao: 'Emprestado',
                 // Inclua outros campos que você deseja preservar
             };
 

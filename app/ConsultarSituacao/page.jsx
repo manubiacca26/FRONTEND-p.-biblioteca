@@ -92,7 +92,7 @@ function Devolucao() {
                                         <td>{livro.autor}</td>
                                         <td>{livro.título}</td>
                                         <td>{livro.assunto}</td>
-                                        <td>{livro.nChamada}</td>
+                                        <td>{livro.nchamada}</td>
                                         <td>{livro.acervo}</td>
                                         <td>{livro.isbn}</td>
                                         <td>{livro.quantidade}</td>
